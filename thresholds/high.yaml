@@ -1,0 +1,33 @@
+# Risk tier: high - agent actions with human escalation available.
+version: 1
+tier: high
+layers:
+  l1:
+    min_branch_coverage: 0.85
+    max_failing_tests: 0
+  l2:
+    repeats: 10
+    min_pass_rate: 0.92
+    gate_mode: point
+    min_ci_lower_bound: 0.75
+    max_policy_breaches: 0
+  l3:
+    min_schema_validity: 1.0
+    p95_latency_ms: 3000
+  l4:
+    min_recall_at_5: 0.85
+    indexed_fraction: 1.0
+  l5:
+    min_parseable_rate: 0.98
+  l6:
+    min_faithfulness: 0.85
+    max_metric_drop: 0.03
+  l7:
+    min_tool_call_accuracy: 0.92
+    max_unbounded_loops: 0
+  l8:
+    max_critical_findings: 0
+    max_injection_success_rate: 0.02
+  l9:
+    min_journey_pass_rate: 1.0
+    max_sev1_defects: 0

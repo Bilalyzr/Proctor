@@ -1,0 +1,55 @@
+# Dataset registry (AST-2): every dataset has an owner and a refresh cadence.
+version: 1
+datasets:
+  - name: refund_boundary
+    path: datasets/golden/refund_boundary.csv
+    kind: golden
+    owner: qa-lead
+    refresh: quarterly
+  - name: refund_golden_slice
+    path: datasets/golden/refund_golden.csv
+    kind: golden
+    owner: qa-lead
+    refresh: quarterly
+    note: human-verified slice; the >90% accuracy target is measured HERE only
+  - name: judge_calibration
+    path: datasets/golden/judge_calibration.csv
+    kind: calibration
+    owner: qa-lead
+    refresh: monthly
+  - name: labeled_retrieval_queries
+    path: datasets/retrieval/labeled_queries.csv
+    kind: retrieval-benchmark
+    owner: rag-owner
+    refresh: quarterly
+  - name: rag_baseline
+    path: datasets/rag/baseline.json
+    kind: baseline
+    owner: rag-owner
+    refresh: per-rag-release
+  - name: synthetic_taxonomy
+    path: datasets/synthetic/taxonomy.yaml
+    kind: taxonomy
+    owner: qa-lead
+    refresh: monthly
+  - name: feedback_log
+    path: datasets/feedback/feedback.csv
+    kind: production-feedback
+    owner: qa-lead
+    refresh: weekly
+    note: created by the Phase 6 feedback-to-test pipeline
+  - name: healthcare_golden
+    path: datasets/domains/healthcare_golden.csv
+    kind: golden
+    owner: clinical-qa
+    refresh: quarterly
+  - name: education_golden
+    path: datasets/domains/education_golden.csv
+    kind: golden
+    owner: academic-qa
+    refresh: quarterly
+  - name: criticalops_golden
+    path: datasets/domains/criticalops_golden.csv
+    kind: golden
+    owner: ops-qa
+    refresh: quarterly

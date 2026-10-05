@@ -1,0 +1,27 @@
+name: pr-smoke
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Setup (offline mock provider - no secrets needed)
+        run: python scripts/tasks.py setup
+      - name: Rank-1 unit suite with coverage gate
+        run: python scripts/tasks.py test
+      - name: Lint and types
+        run: python scripts/tasks.py lint
+      - name: Upload run artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr-smoke-reports
+          path: reports/
+          if-no-files-found: ignore

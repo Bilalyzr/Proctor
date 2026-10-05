@@ -1,0 +1,30 @@
+name: nightly
+# GOV-4: nightly regression on the main branch; artifacts feed the dashboard.
+on:
+  schedule:
+    - cron: "30 21 * * *" # 21:30 UTC nightly
+  workflow_dispatch:
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Setup (offline mock provider)
+        run: python scripts/tasks.py setup
+      - name: Lint and types
+        run: python scripts/tasks.py lint
+      - name: Full regression (all built layers, statistical gates)
+        run: python scripts/tasks.py nightly
+      - name: Pyramid gate chain (thresholds/<tier>.yaml)
+        run: python scripts/tasks.py gate
+      - name: Upload run logs, manifests and gate verdicts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightly-reports
+          path: reports/
+          if-no-files-found: ignore

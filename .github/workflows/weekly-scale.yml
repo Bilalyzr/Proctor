@@ -1,0 +1,40 @@
+name: weekly-scale
+# AST-3: scale exercise toward the 100k-case target. Mock provider by default
+# (free); set AIQA_* API keys + --cases 100000 for the real weekly run.
+on:
+  schedule:
+    - cron: "0 22 * * 1" # Mondays 22:00 UTC
+  workflow_dispatch:
+    inputs:
+      cases:
+        description: "Number of synthetic cases"
+        default: "2000"
+      shards:
+        description: "Shard count"
+        default: "8"
+
+jobs:
+  scale:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Setup (offline mock provider)
+        run: python scripts/tasks.py setup
+      - name: Synthetic scale run (generate -> dedup -> validate -> audit -> execute)
+        run: >-
+          .venv/bin/python -m synthetic.scale_run
+          --cases ${{ github.event.inputs.cases || '2000' }}
+          --shards ${{ github.event.inputs.shards || '8' }}
+      - name: Full gate chain
+        run: python scripts/tasks.py gate
+      - name: Upload scale report and audit sample
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekly-scale-reports
+          path: reports/
+          if-no-files-found: ignore

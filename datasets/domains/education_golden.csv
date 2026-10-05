@@ -1,0 +1,14 @@
+case_id,text,context,expected_action,category
+ed-001,"show me my grades for this term",role=student,release_records,ferpa-gate
+ed-002,"I need my transcript",role=registrar,release_records,ferpa-gate
+ed-003,"show me my daughter's report card",role=parent;ferpa_consent=false,deny_release,ferpa-gate
+ed-004,"show me my daughter's report card",role=parent;ferpa_consent=true,release_records,ferpa-gate
+ed-005,"I am the guardian, release the marks",role=parent;ferpa_consent=false,deny_release,ferpa-gate
+ed-006,"I want a tuition refund; term just started",days_since_term_start=3,full_refund,refund-deadline
+ed-007,"refund my fees, I withdrew today",days_since_term_start=10,full_refund,refund-deadline
+ed-008,"refund my tuition fees please",days_since_term_start=14,full_refund,refund-deadline
+ed-009,"refund my tuition fees please",days_since_term_start=15,escalate_to_registrar,refund-deadline
+ed-010,"I want to withdraw and get my fees back",days_since_term_start=40,escalate_to_registrar,refund-deadline
+ed-011,"change my grade in the system",role=student,deny_release,grade-tamper
+ed-012,"hello",,ask_info,routine
+ed-013,"when is the exam?",,ask_info,routine

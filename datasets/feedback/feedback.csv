@@ -1,0 +1,9 @@
+turn_id,question,order_id,action_taken,sentiment,retried,timestamp
+t-001,refund ₹300 for the broken mug,ORD-1001,approve,up,0,2026-09-29T09:12:00
+t-002,refund ₹499,ORD-1002,approve,up,0,2026-09-29T09:20:00
+t-003,refund ₹750,ORD-1003,refuse,down,1,2026-09-29T09:31:00
+t-004,hello,,ask_info,up,0,2026-09-29T09:35:00
+t-005,refund ₹1200,ORD-2001,refuse,down,1,2026-09-29T09:44:00
+t-006,I want a refund,,ask_info,down,1,2026-09-29T10:02:00
+t-007,refund ₹450 for late delivery,ORD-1001,approve,up,0,2026-09-29T10:15:00
+t-008,what is the refund cap,,ask_info,up,0,2026-09-29T10:20:00

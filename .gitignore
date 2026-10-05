@@ -1,0 +1,30 @@
+# environments
+.venv/
+venv/
+
+# run artifacts (regenerated per run; keep the tree, ignore contents)
+reports/*
+!reports/README.md
+
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# tooling caches
+.coverage
+coverage.xml
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+
+# local secrets - never commit
+.env
+
+# generated datasets (DVC-tracked in a real deployment)
+datasets/synthetic/generated/
+datasets/synthetic/cache/

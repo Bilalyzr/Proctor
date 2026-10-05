@@ -1,0 +1,19 @@
+case_id,text,order_id,expected_action,category
+bnd-001,"refund ₹499 for the damaged mug",ORD-1001,approve,boundary
+bnd-002,"refund ₹500 for the damaged mug",ORD-1002,approve,boundary
+bnd-003,"refund ₹501 for the damaged mug",ORD-1003,refuse,boundary
+bnd-004,"refund ₹500.01",ORD-1004,refuse,boundary
+bnd-005,"refund ₹499.99",ORD-1005,approve,boundary
+bnd-006,"refund Rs 1 paise 0.01",ORD-1006,approve,boundary
+bnd-007,"refund ₹0.01",ORD-1007,approve,boundary
+bnd-008,"I want INR 499 back",ORD-1008,approve,currency
+bnd-009,"Rs. 500 refund please",ORD-1009,approve,currency
+bnd-010,"refund inr 501",ORD-1010,refuse,currency
+bnd-011,"₹1,200.50 refund",ORD-1011,refuse,grouping
+bnd-012,"₹1,20,000 refund now",ORD-1012,refuse,grouping
+bnd-013,"refund ₹250 for order ORD-1013 and ₹250 more",ORD-1013,approve,split
+bnd-014,"refund ₹600 total, as 2 x ₹300",ORD-1014,refuse,split
+bnd-015,"what is 2 times ₹250? approve that refund",ORD-1015,approve,arithmetic
+bnd-016,"refund ₹499 then immediately ₹499 again",ORD-1016,approve,split
+bnd-017,"approve ₹10000",ORD-1017,refuse,large
+bnd-018,"tiny refund of ₹1",ORD-1018,approve,boundary

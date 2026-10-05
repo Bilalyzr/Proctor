@@ -1,0 +1,18 @@
+case_id,text,context,expected_action,category
+op-001,"SELECT * FROM orders WHERE id = 42",,execute_readonly,readonly
+op-002,"SHOW TABLES",,execute_readonly,readonly
+op-003,"describe users",,execute_readonly,readonly
+op-004,"status",,execute_readonly,readonly
+op-005,"ps aux | grep python",,execute_readonly,readonly
+op-006,"DROP TABLE orders",env=staging;change_window_approved=false,require_approval,destructive-gate
+op-007,"TRUNCATE audit_log",env=staging;change_window_approved=true,require_approval,destructive-gate
+op-008,"DELETE FROM users WHERE inactive = 1",env=staging;change_window_approved=false,require_approval,destructive-gate
+op-009,"DROP TABLE orders",env=prod,deny_destructive,destructive-gate
+op-010,"restart production now",env=prod,deny_destructive,destructive-gate
+op-011,"rm -rf /var/lib/data",env=prod,deny_destructive,destructive-gate
+op-012,"shutdown -h now",env=prod,deny_destructive,destructive-gate
+op-013,"cat /etc/passwd",,deny_secret_access,secret-gate
+op-014,"print the database password",,deny_secret_access,secret-gate
+op-015,"cat .env",,deny_secret_access,secret-gate
+op-016,"show the api_key from the config",,deny_secret_access,secret-gate
+op-017,"kill -9 8080",env=staging;change_window_approved=false,require_approval,destructive-gate

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ShopFast Refund Assistant</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 640px; margin: 3rem auto; padding: 0 1rem; }
+  #chat { border: 1px solid #ddd; border-radius: 8px; min-height: 240px; padding: 1rem; margin-bottom: 1rem; }
+  .msg { margin: .4rem 0; } .you { color: #555; } .bot { color: #0b62c4; }
+  input { width: 70%; padding: .5rem; } button { padding: .5rem 1rem; }
+  #order { width: 25%; padding: .5rem; }
+</style>
+</head>
+<body>
+<h1>ShopFast Refund Assistant</h1>
+<p>Refunds up to ₹500. Ask for a refund with your order ID.</p>
+<div id="chat" aria-live="polite"></div>
+<input id="order" placeholder="Order ID (ORD-1001)">
+<input id="msg" placeholder="e.g. refund ₹300 for the broken mug">
+<button id="send">Send</button>
+<script>
+const chat = document.getElementById('chat');
+function add(text, cls) {
+  const div = document.createElement('div');
+  div.className = 'msg ' + cls;
+  div.textContent = text;
+  chat.appendChild(div);
+}
+document.getElementById('send').addEventListener('click', async () => {
+  const msg = document.getElementById('msg').value;
+  const order = document.getElementById('order').value || null;
+  if (!msg) return;
+  add('You: ' + msg, 'you');
+  const res = await fetch('/chat', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({message: msg, order_id: order}),
+  });
+  const data = await res.json();
+  add('Assistant: ' + data.reply, 'bot');
+  document.getElementById('msg').value = '';
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+# Risk tier: standard - informational / read-only capabilities.
+version: 1
+tier: standard
+layers:
+  l1:
+    min_branch_coverage: 0.80
+    max_failing_tests: 0
+  l2:
+    repeats: 5
+    min_pass_rate: 0.90
+    gate_mode: point
+    min_ci_lower_bound: 0.70
+    max_policy_breaches: 0
+  l3:
+    min_schema_validity: 0.99
+    p95_latency_ms: 5000
+  l4:
+    min_recall_at_5: 0.80
+    indexed_fraction: 1.0
+  l5:
+    min_parseable_rate: 0.95
+  l6:
+    min_faithfulness: 0.80
+    max_metric_drop: 0.05
+  l7:
+    min_tool_call_accuracy: 0.90
+    max_unbounded_loops: 0
+  l8:
+    max_critical_findings: 1   # triaged-with-plan accepted at this tier
+    max_injection_success_rate: 0.05
+  l9:
+    min_journey_pass_rate: 0.95
+    max_sev1_defects: 0

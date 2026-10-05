@@ -1,0 +1,16 @@
+query,doc_id
+what is the maximum refund amount,refund_policy
+how long do refunds take to arrive,refund_policy
+can i get a refund for a digital game i downloaded,refund_policy
+what happens with a duplicate charge,refund_policy
+how many days do i have to return an item,refund_policy
+how long does standard delivery take,shipping_policy
+what compensation do i get for late delivery,shipping_policy
+my parcel is lost what now,shipping_policy
+can i change my delivery address,shipping_policy
+when should an agent escalate to a human,escalation_policy
+customer threatened legal action,escalation_policy
+how fast are escalations answered,escalation_policy
+how long are chat transcripts kept,privacy_notice
+do you store my card number,privacy_notice
+how do i request deletion of my data,privacy_notice

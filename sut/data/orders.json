@@ -1,0 +1,8 @@
+{
+  "ORD-1001": {"customer": "Asha", "total_paise": 125000, "status": "delivered", "eligible": true},
+  "ORD-1002": {"customer": "Rahul", "total_paise": 49900, "status": "delivered", "eligible": true},
+  "ORD-1003": {"customer": "Priya", "total_paise": 50000, "status": "delivered", "eligible": true},
+  "ORD-2001": {"customer": "Vikram", "total_paise": 300000, "status": "delivered", "eligible": true},
+  "ORD-3001": {"customer": "Meera", "total_paise": 120000, "status": "cancelled", "eligible": false},
+  "ORD-4001": {"customer": "Arjun", "total_paise": 45000, "status": "delivered", "eligible": false, "note": "digital goods - not refundable"}
+}
