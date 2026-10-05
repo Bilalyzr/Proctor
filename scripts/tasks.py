@@ -42,13 +42,11 @@ def task_setup() -> int:
 
 def task_test() -> int:
     py = _py()
-    rc = _run(
-        [py, "-m", "pytest", "tests/l1_unit", "-m", "l1", "--cov", "--cov-report=term-missing"]
-    )
-    if rc != 0:
-        return rc
-    # keep the strict-markers guarantee across all future layer folders too
-    return _run([py, "-m", "pytest", "tests", "--collect-only", "-q"])
+    # Full suite under coverage: pyproject's [tool.coverage.run] source lists ALL
+    # packages and fail_under=85, so an l1-only run can never reach the gate.
+    # Mirrors the L1 gate command in framework/gates.py (collecting the whole
+    # tree also keeps the strict-markers guarantee across layer folders).
+    return _run([py, "-m", "pytest", "tests", "-q", "--cov", "--cov-report=term-missing"])
 
 
 def task_lint() -> int:
