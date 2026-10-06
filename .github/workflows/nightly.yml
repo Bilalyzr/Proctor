@@ -25,6 +25,8 @@ jobs:
         run: .venv/bin/python -m framework.large_context
       - name: Plain-English acceptance suite
         run: .venv/bin/python -m framework.nltests tests/acceptance/refunds.md
+      - name: Accuracy engine benchmark (reduced)
+        run: .venv/bin/python -m framework.accuracy
       - name: Upload run logs, manifests and gate verdicts
         if: always()
         uses: actions/upload-artifact@v4

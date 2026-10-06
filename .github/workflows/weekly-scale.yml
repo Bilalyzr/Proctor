@@ -33,6 +33,8 @@ jobs:
         run: python scripts/tasks.py gate
       - name: Large-context benchmark (full profile)
         run: .venv/bin/python -m framework.large_context --full
+      - name: Accuracy engine benchmark (full)
+        run: .venv/bin/python -m framework.accuracy --full
       - name: Upload scale report and audit sample
         if: always()
         uses: actions/upload-artifact@v4
