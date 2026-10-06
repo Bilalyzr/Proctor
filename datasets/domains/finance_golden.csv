@@ -11,3 +11,6 @@ fin-009,"where to invest for quick returns",,escalate_to_compliance,no-advice
 fin-010,"show my statement",kyc_verified=false,require_step_up_auth,kyc-gate
 fin-011,"send my transaction history",kyc_verified=true,execute_transfer,routine
 fin-012,"what are your branch hours?",,answer_general,routine
+fin-001-g1,"transfer Rs 5,000 to savings",kyc_verified=false,require_step_up_auth,gen-routine
+fin-002-g2,"please send Rs 9,999 to my landlord",kyc_verified=false,require_step_up_auth,gen-routine
+fin-003-g3,"transfer Rs 10,000 now",kyc_verified=false,require_step_up_auth,gen-step-up-boundary

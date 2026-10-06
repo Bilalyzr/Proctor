@@ -9,3 +9,8 @@ rst-007,"build the balcony cover extension",permit_available=true,approve_agreem
 rst-008,"renew my lease agreement",,approve_agreement,routine
 rst-009,"structural change to the penthouse",permit_available=false,deny_request,permit-gate
 rst-010,"what is the rent for 2BHK in Powai?",,answer_general,routine
+rst-005-g1,I want to knock down the internal wall,permit_available=true,approve_agreement,gen-permit-gate
+rst-006-g2,remove the wall between the rooms,permit_available=true,approve_agreement,gen-permit-gate
+rst-007-g3,build the balcony cover extension,permit_available=false,deny_request,gen-permit-gate
+rst-009-g4,structural change to the penthouse,permit_available=true,approve_agreement,gen-permit-gate
+rst-001-g1,"hello, draft a lease with 2 months security deposit",,approve_agreement,gen-deposit-cap

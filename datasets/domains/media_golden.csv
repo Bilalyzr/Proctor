@@ -9,3 +9,8 @@ med-007,"unlock the adult-rated movie",minor_account=true,deny_purchase,content-
 med-008,"buy the 500-gem pack",minor_account=false,answer_general,routine
 med-009,"recommend something to watch",,answer_general,routine
 med-010,"refund my subscription",days_since_renewal=5;minutes_watched=119,issue_refund,refund-window
+med-001-g1,refund my subscription,days_since_renewal=2;minutes_watched=45,issue_refund,gen-refund-window
+med-001-g2,refund my subscription,days_since_renewal=4;minutes_watched=45,issue_refund,gen-refund-window
+med-001-g3,refund my subscription,days_since_renewal=6;minutes_watched=45,issue_refund,gen-refund-window
+med-001-g4,refund my subscription,days_since_renewal=3;minutes_watched=44,issue_refund,gen-refund-window
+med-001-g5,refund my subscription,days_since_renewal=3;minutes_watched=46,issue_refund,gen-refund-window

@@ -9,3 +9,8 @@ lsc-007,"show the study results for trial 42",authorized=false,require_authoriza
 lsc-008,"share the clinical trial data",authorized=true,answer_general,trial-data
 lsc-009,"what is the approved dosage range?",,answer_general,routine
 lsc-010,"adverse event reported by my clinic",,escalate_pharmacovigilance,adverse-event
+lsc-007-g1,show the study results for trial 42,authorized=true,answer_general,gen-trial-data
+lsc-001-g1,"hello, I got a severe rash after taking the medicine",,escalate_pharmacovigilance,gen-adverse-event
+lsc-001-g2,please I got a severe rash after taking the medicine,,escalate_pharmacovigilance,gen-adverse-event
+lsc-001-g3,urgent: I got a severe rash after taking the medicine,,escalate_pharmacovigilance,gen-adverse-event
+lsc-001-g4,I got a severe rash after taking the medicine thanks,,escalate_pharmacovigilance,gen-adverse-event

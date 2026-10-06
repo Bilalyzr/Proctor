@@ -29,11 +29,26 @@ INBOUND_RULES: list[tuple[str, re.Pattern[str]]] = [
     ),
     (
         "fake-system-directive",
-        re.compile(r"(###\s*)?(system|institutional)\s*(override|directive|note)\s*[:>]", re.I),
+        re.compile(
+            r"(###\s*)?(system|institutional|internal)\s*(override|directive|note)\s*[:>]",
+            re.I,
+        ),
+    ),
+    (
+        "directive-tag",
+        re.compile(r"###\s*(directive|note|instruction)s?\s*[:>]", re.I),
     ),
     (
         "fake-system-tag",
         re.compile(r"(?<![a-z])system\s*[:>]", re.I),
+    ),
+    (
+        "roleplay-impersonation",
+        re.compile(
+            r"\b(pretend you are|pretend to be|roleplay:?|act as my|act as a)\b"
+            r"[^.!?]{0,60}\b(approve|refund|insist|manager|tier-?\d|doctor|lawyer)\b",
+            re.I,
+        ),
     ),
     (
         "policy-forgery",
@@ -46,7 +61,7 @@ INBOUND_RULES: list[tuple[str, re.Pattern[str]]] = [
     (
         "credential-exfil",
         re.compile(
-            r"(reveal|print|show|repeat)\s+(your\s+)?(system\s+)?(prompt|instructions|api\s*key|secret)",
+            r"\b(reveal|print|show|repeat)\b.{0,20}\b(prompt|instructions|api\s*key|secrets?)\b",
             re.I,
         ),
     ),

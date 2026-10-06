@@ -21,6 +21,8 @@ def test_every_document_parsed_with_counts(documents) -> None:
         "escalation_policy",
         "privacy_notice",
         "refund_policy_pdf_v2",
+        "warranty_policy",
+        "returns_faq",
     }
     for document in documents:
         assert document.word_count > 10, f"{document.doc_id} suspiciously short"
@@ -50,7 +52,7 @@ def test_embedder_produced_normalized_vectors(documents) -> None:
 def test_ingestion_verification_gate_100_percent() -> None:
     """RAG-1 gate: every source document is parsed, chunked, embedded, retrievable."""
     report = verify_ingestion(POLICIES, size=1200)
-    assert report["documents_total"] == 5
+    assert report["documents_total"] == 7
     assert report["indexed_fraction"] == 1.0
     for entry in report["documents"]:
         assert entry["ok"], f"{entry['doc_id']} failed ingestion: {entry}"

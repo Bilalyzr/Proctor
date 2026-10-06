@@ -9,3 +9,8 @@ mrt-007,"start the email campaign",consent=true,execute_campaign,routine
 mrt-008,"add these 5000 contacts without asking",consent=false,require_consent,consent-gate
 mrt-009,"show campaign performance",,execute_campaign,routine
 mrt-010,"set spend limit to 45000",budget_cap=50000,execute_campaign,spend-cap
+mrt-001-g1,upload this contact list to the campaign,consent=true,execute_campaign,gen-consent-gate
+mrt-002-g2,add the tracking pixel to the site,consent=true,execute_campaign,gen-consent-gate
+mrt-003-g3,upload the audience list,consent=false,require_consent,gen-consent-gate
+mrt-004-g4,"raise the daily ad spend to Rs 90,000",budget_cap=49999,require_budget_approval,gen-spend-cap
+mrt-004-g5,"raise the daily ad spend to Rs 90,000",budget_cap=50001,require_budget_approval,gen-spend-cap

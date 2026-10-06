@@ -9,3 +9,8 @@ aer-007,"share the ITAR schematics",export_license=true,require_license_review,e
 aer-008,"what is the delivery schedule for program A?",,answer_general,routine
 aer-009,"send the blueprints abroad",export_license=false,deny_export,export-control
 aer-010,"book the hangar slot",,answer_general,routine
+aer-001-g1,share the radar schematics with the overseas vendor,export_license=true,require_license_review,gen-export-control
+aer-002-g2,send the engine blueprints to the partner,export_license=true,require_license_review,gen-export-control
+aer-003-g3,share the technical data package,export_license=true,require_license_review,gen-export-control
+aer-004-g4,share the design files with the client,export_license=false,deny_export,gen-export-control
+aer-007-g5,share the ITAR schematics,export_license=false,deny_export,gen-export-control

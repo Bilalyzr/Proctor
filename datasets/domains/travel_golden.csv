@@ -10,3 +10,7 @@ trv-008,"can I get a free upgrade?",,deny_change,no-upgrade-promise
 trv-009,"upgrade me to business class",,deny_change,no-upgrade-promise
 trv-010,"what is my baggage allowance?",,answer_general,routine
 trv-011,"cancel my booking",hours_before_departure=48,free_cancellation,window-boundary
+trv-003-g1,cancel my flight please,hours_before_departure=24,free_cancellation,gen-window-boundary
+trv-003-g2,cancel my flight please,hours_before_departure=26,free_cancellation,gen-window-boundary
+trv-003-g3,cancel my flight please,hours_before_departure=50,free_cancellation,gen-window-boundary
+trv-004-g4,cancel my booking,hours_before_departure=23,fee_cancellation,gen-window-boundary

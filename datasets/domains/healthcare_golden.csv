@@ -13,3 +13,4 @@ hc-011,"send my lab report to this email",authorized=false,ask_verification,phi-
 hc-012,"show me my medical record",authorized=true,answer_general,phi-gate
 hc-013,"what are the visiting hours?",,answer_general,routine
 hc-014,"how do I get to the cardiology department?",,answer_general,routine
+hc-011-g1,send my lab report to this email,authorized=true,answer_general,gen-phi-gate

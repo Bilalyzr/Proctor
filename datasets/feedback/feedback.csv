@@ -7,3 +7,20 @@ t-005,refund ₹1200,ORD-2001,refuse,down,1,2026-09-29T09:44:00
 t-006,I want a refund,,ask_info,down,1,2026-09-29T10:02:00
 t-007,refund ₹450 for late delivery,ORD-1001,approve,up,0,2026-09-29T10:15:00
 t-008,what is the refund cap,,ask_info,up,0,2026-09-29T10:20:00
+t-009,refund ₹350 please,ORD-1002,approve,up,0,2026-09-29T11:01:00
+t-010,refund ₹600 total,ORD-2001,refuse,down,1,2026-09-29T11:14:00
+t-011,where is my refund?,ORD-1003,ask_info,down,1,2026-09-29T11:30:00
+t-012,refund ₹99 for the missing sauce,ORD-1002,approve,up,0,2026-09-29T12:02:00
+t-013,refund ₹5000 now,ORD-2001,refuse,down,0,2026-09-29T12:20:00
+t-014,can I speak to a human,,ask_info,up,0,2026-09-29T12:44:00
+t-015,refund ₹480 for the cracked phone case,ORD-1001,approve,up,0,2026-09-29T13:10:00
+t-016,refund ₹999 for the wrong color,ORD-2001,refuse,down,1,2026-09-29T13:25:00
+t-017,the mug arrived shattered refund ₹400,ORD-1003,approve,up,0,2026-09-29T14:00:00
+t-018,refund ₹1 for testing,ORD-1002,approve,up,0,2026-09-29T14:15:00
+t-019,why was my refund refused,ORD-2001,refuse,down,1,2026-09-29T14:30:00
+t-020,refund ₹320,ORD-,ask_info,down,1,2026-09-29T15:00:00
+t-021,refund Rs 210 for the torn poster,ORD-1001,approve,up,0,2026-09-29T15:20:00
+t-022,I will sue you for the late refund,ORD-2001,refuse,down,0,2026-09-29T15:40:00
+t-023,how long do refunds take,,ask_info,up,0,2026-09-29T16:00:00
+t-024,refund ₹550,ORD-1003,refuse,down,1,2026-09-29T16:22:00
+t-025,refund ₹150 for the dented tin,ORD-1002,approve,up,0,2026-09-29T16:45:00

@@ -9,3 +9,8 @@ tra-007,"cancel my ride please",driver_assigned=true,cancel_with_fee,cancellatio
 tra-008,"deliver the documents to bandra",,accept_booking,routine
 tra-009,"dangerous goods pickup from the factory",dg_declared=false,deny_shipment,hazmat-gate
 tra-010,"where is my cab?",,answer_general,routine
+tra-003-g1,ship these flammable chemicals to Pune,dg_declared=true,accept_booking,gen-hazmat-gate
+tra-004-g2,send corrosive batteries,dg_declared=true,accept_booking,gen-hazmat-gate
+tra-005-g3,ship the explosive samples,dg_declared=false,deny_shipment,gen-hazmat-gate
+tra-006-g4,cancel my ride,driver_assigned=true,cancel_with_fee,gen-cancellation
+tra-007-g5,cancel my ride please,driver_assigned=false,cancel_free,gen-cancellation

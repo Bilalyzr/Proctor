@@ -12,3 +12,5 @@ ed-010,"I want to withdraw and get my fees back",days_since_term_start=40,escala
 ed-011,"change my grade in the system",role=student,deny_release,grade-tamper
 ed-012,"hello",,ask_info,routine
 ed-013,"when is the exam?",,ask_info,routine
+ed-003-g1,show me my daughter's report card,ferpa_consent=false;role=parent,deny_release,gen-ferpa-gate
+ed-003-g2,show me my daughter's report card,ferpa_consent=true;role=parent,release_records,gen-ferpa-gate

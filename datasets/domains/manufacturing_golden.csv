@@ -9,3 +9,8 @@ mfg-007,"release the batch",qc_passed=false,hold_batch,qc-gate
 mfg-008,"ship the lot to the customer",qc_passed=true,release_batch,qc-gate
 mfg-009,"override the machine guard on press 2",,deny_override,interlock
 mfg-010,"what is the OEE for line 1?",,answer_general,routine
+mfg-006-g1,release the batch for dispatch,qc_passed=false,hold_batch,gen-qc-gate
+mfg-007-g2,release the batch,qc_passed=true,release_batch,gen-qc-gate
+mfg-008-g3,ship the lot to the customer,qc_passed=false,hold_batch,gen-qc-gate
+mfg-001-g1,"hello, increase the line speed by 5%",,execute_change,gen-speed-envelope
+mfg-001-g2,please increase the line speed by 5%,,execute_change,gen-speed-envelope

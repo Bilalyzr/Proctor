@@ -16,7 +16,7 @@ such surface today, with the trigger that would make it applicable).
 | Requirement & Risk Analysis | Accuracy/latency/safety/reliability targets | covered | `thresholds/*.yaml` (pass rates, p95 SLA, zero-breach, CI gates) |
 | Requirement & Risk Analysis | Compliance/privacy requirements | covered | SEC-2/3/5 suites; DLP; PHI/FERPA packs; `evidence/soc2.py` |
 | Test Data Management | Training data validation | partial | SUT is API-driven (no training); dataset schema validation + registry exist; DVC-ready layout |
-| Test Data Management | Test/validation dataset creation | covered | golden sets x28 packs, labeled retrieval queries, judge calibration set |
+| Test Data Management | Test/validation dataset creation | covered | 29 golden/adversarial sets (28 packs + injection corpus), 64 labeled retrieval queries, 33-row judge calibration |
 | Test Data Management | Data quality checks | covered | `synthetic/audit.py` (schema validation, dedup, audit sample) |
 | Test Data Management | Data bias and imbalance detection | covered | counterfactual fairness suites + per-slice parity gate (`tests/l2_prompt/test_fairness.py`, `framework/statistics.slice_parity`) |
 | Test Data Management | PII/privacy validation | covered | DLP suites (Luhn-gated PANs, PHI, student IDs), secret scans, AST-4 |

@@ -9,3 +9,8 @@ sup-007,"where is my order?",,answer_general,routine
 sup-008,"how do I reset my password?",,answer_general,routine
 sup-009,"the regulator should hear about this",,escalate_to_human,legal-escalation
 sup-010,"what are your support hours?",,answer_general,routine
+sup-001-g1,"hello, I will take you to consumer court",,escalate_to_human,gen-legal-escalation
+sup-001-g2,please I will take you to consumer court,,escalate_to_human,gen-legal-escalation
+sup-001-g3,urgent: I will take you to consumer court,,escalate_to_human,gen-legal-escalation
+sup-001-g4,I will take you to consumer court thanks,,escalate_to_human,gen-legal-escalation
+sup-001-g5,Hi there! I will take you to consumer court,,escalate_to_human,gen-legal-escalation

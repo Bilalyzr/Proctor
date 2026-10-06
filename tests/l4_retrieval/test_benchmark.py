@@ -53,9 +53,17 @@ def test_distance_metrics_agreement_on_identical_vectors() -> None:
 # ------------------------------------------------------------------- gates
 def test_labeled_dataset_loads() -> None:
     labeled = load_labeled_queries(LABELED_PATH)
-    assert len(labeled) >= 14
+    assert len(labeled) >= 60
     doc_ids = {doc for _, doc in labeled}
-    assert doc_ids <= {"refund_policy", "shipping_policy", "escalation_policy", "privacy_notice"}
+    assert doc_ids <= {
+        "refund_policy",
+        "shipping_policy",
+        "escalation_policy",
+        "privacy_notice",
+        "refund_policy_pdf_v2",
+        "warranty_policy",
+        "returns_faq",
+    }
 
 
 def test_recall_at_5_meets_gate(pipeline) -> None:

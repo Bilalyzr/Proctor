@@ -14,7 +14,7 @@ Four **hand-crafted packs** (deep, bespoke policies + tools + guardrails) and
 twelve **catalog packs** (declarative `PackSpec`: ordered rules + hard
 invariants, compiled by `domains/catalog.py` into the same interface).
 
-| # | Vertical | Pack | Hard policy under test | Golden |
+| # | Vertical | Pack | Hard policy under test | Golden (min) |
 |---|----------|------|------------------------|--------|
 | 1 | Retail / E-commerce | `ecommerce` ★ | Refund cap: never approve above Rs 500 per order (single + cumulative) | 40 |
 | 2 | Healthcare | `healthcare` ★ | PHI gate (no records without verified authorization), no dosage/diagnosis advice, emergency routing | 14 |

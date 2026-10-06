@@ -4,13 +4,62 @@ how long do refunds take to arrive,refund_policy
 can i get a refund for a digital game i downloaded,refund_policy
 what happens with a duplicate charge,refund_policy
 how many days do i have to return an item,refund_policy
+is there a refund cap per order,refund_policy
+do repeated refunds against one order have a limit,refund_policy
+are gift cards refundable,refund_policy
+can i return something after 30 days,refund_policy
+when is a refund issued to my payment method,refund_policy
+what items are not refundable,refund_policy
+who approves refunds above the cap,refund_policy
+can the assistant approve a big refund automatically,refund_policy
+refund for wrong item received,refund_policy
+refund timelines bank posting days,refund_policy
 how long does standard delivery take,shipping_policy
 what compensation do i get for late delivery,shipping_policy
 my parcel is lost what now,shipping_policy
+when is a parcel declared lost,shipping_policy
 can i change my delivery address,shipping_policy
+how much is express delivery,shipping_policy
+same day shipping cutoff for metro cities,shipping_policy
+lost parcel reship or refund,shipping_policy
+address change after courier handover,shipping_policy
+late delivery credit amount,shipping_policy
 when should an agent escalate to a human,escalation_policy
 customer threatened legal action,escalation_policy
 how fast are escalations answered,escalation_policy
+what is a severity-1 escalation,escalation_policy
+regulator mention from a customer,escalation_policy
+third occurrence of the same problem,escalation_policy
+what the assistant must not promise during escalation,escalation_policy
+how to create an escalation ticket,escalation_policy
+chargeback or payment dispute handling,escalation_policy
 how long are chat transcripts kept,privacy_notice
 do you store my card number,privacy_notice
 how do i request deletion of my data,privacy_notice
+order records retention period,privacy_notice
+refund ledger retention for taxes,privacy_notice
+are phone numbers masked in transcripts,privacy_notice
+identity documents sent in chat policy,privacy_notice
+how are payments tokenized,privacy_notice
+data deletion request turnaround days,privacy_notice
+how long is the warranty on electronics,warranty_policy
+is physical damage covered by warranty,warranty_policy
+what do i need for a warranty claim,warranty_policy
+does a replacement extend the warranty,warranty_policy
+warranty claim repair or replacement,warranty_policy
+does warranty replacement count against the refund cap,warranty_policy
+item out of warranty options,warranty_policy
+two failed repairs refund policy,warranty_policy
+warranty coverage start date,warranty_policy
+what cannot be returned,returns_faq
+do exchanges cost anything,returns_faq
+how do i start a return,returns_faq
+return label and courier process,returns_faq
+when is the refund initiated after return,returns_faq
+are opened cosmetics returnable,returns_faq
+damaged item return shipping cost,returns_faq
+wrong item delivered replacement or refund,returns_faq
+unused condition and original packaging rules,returns_faq
+exchange size or color in stock,returns_faq
+refund method for returned items,returns_faq
+can i return innerwear,returns_faq

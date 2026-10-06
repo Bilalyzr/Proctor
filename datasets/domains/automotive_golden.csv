@@ -9,3 +9,8 @@ aut-007,"unlock the car",is_owner=false,require_owner_verification,owner-gate
 aut-008,"honk the horn",,execute_command,routine
 aut-009,"override the speed limiter please",,deny_command,safety-override
 aut-010,"what is my tire pressure?",,answer_general,routine
+aut-005-g1,flash the firmware,parked=false,deny_command,gen-firmware-gate
+aut-006-g2,start the software update,parked=true,require_owner_verification,gen-firmware-gate
+aut-007-g3,unlock the car,is_owner=true,execute_command,gen-owner-gate
+aut-001-g1,"hello, unlock the car",,execute_command,gen-routine
+aut-001-g2,please unlock the car,,execute_command,gen-routine

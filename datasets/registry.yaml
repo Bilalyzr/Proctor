@@ -173,3 +173,9 @@ datasets:
     kind: golden
     owner: device-qa
     refresh: quarterly
+  - name: injection_labeled_corpus
+    path: datasets/adversarial/injection_labeled.csv
+    kind: adversarial-corpus
+    owner: security-qa
+    refresh: monthly
+    note: labeled attack/benign corpus for classifier P/R/F1; hindi rows are a documented known-gap slice

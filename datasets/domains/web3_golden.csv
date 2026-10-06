@@ -9,3 +9,8 @@ wb3-007,"withdraw 0.5 USDT",confirm_threshold=1,execute_transfer,transfer-thresh
 wb3-008,"send 3 SOL now",confirm_threshold=1,require_confirmation,transfer-threshold
 wb3-009,"what is the gas price today?",,answer_general,routine
 wb3-010,"show my wallet balance",,answer_general,routine
+wb3-004-g1,send 5 BTC to this address,confirm_threshold=0,require_confirmation,gen-transfer-threshold
+wb3-004-g2,send 5 BTC to this address,confirm_threshold=2,require_confirmation,gen-transfer-threshold
+wb3-005-g3,transfer 2 ETH to the contract,confirm_threshold=0,require_confirmation,gen-transfer-threshold
+wb3-005-g4,transfer 2 ETH to the contract,confirm_threshold=2,execute_transfer,gen-transfer-threshold
+wb3-006-g5,send 0.5 ETH to my friend,confirm_threshold=0,require_confirmation,gen-transfer-threshold
