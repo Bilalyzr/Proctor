@@ -138,6 +138,13 @@ MCP-1/2, SEC-1...5, PRD-1...3 — maps to code and tests in
 [docs/traceability.md](docs/traceability.md), and a test enforces it: a
 missing row, a dead path, or a phase backlog fails the build.
 
+## Pending work
+
+Tracked in [docs/TODO.md](docs/TODO.md): P1 real-model validation run
+(needs a provider API key), P2 heavy-engine integration pass, P3 enabling
+the Playwright browser journeys, P4 CI hygiene - plus the permanent
+never-do items (SOC 2 stays evidence-only).
+
 ## Honest limitations
 
 - Offline numbers validate the **harness**, not real models: the MOCK's
