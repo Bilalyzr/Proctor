@@ -47,9 +47,11 @@ each layer's thresholds come from versioned `thresholds/<tier>.yaml` files.
 ## Multi-domain: all 16 industry verticals
 
 The harness is vertical-agnostic; each industry plugs in as a **domain pack**.
-All sixteen verticals are covered end to end — every one with its own hard
-policy engine, decision schema, golden set, rogue-model invariant test and
-matrix entry:
+All 16 industry groups are covered by 28 domain packs - and the full master
+list of **80 application domains** (from BFSI to LegalTech to EV charging)
+is initialized in `domains/appdomains.py`, each with an executable probe
+test. Every pack has its own hard-policy engine, decision schema, golden
+set, rogue-model invariant test and matrix entry:
 
 Finance (BFSI/fintech/insurance) · Healthcare · Retail/E-commerce ·
 Travel (airlines/hotels/booking) · Transportation (cab/logistics/fleet) ·
@@ -69,11 +71,11 @@ denial in plants, permit-gated feeder shutdowns, 2-month deposit caps,
 and mandatory adverse-event pharmacovigilance escalation.
 
 ```bash
-python -m domains   # 16-vertical matrix: golden sets + rogue-model invariants
+python -m domains   # 28-pack matrix: golden sets + rogue-model invariants
 ```
 
-Adding vertical #17 is one PackSpec + one golden CSV — see
-[docs/domains.md](docs/domains.md).
+Adding a 29th pack is one PackSpec + one golden CSV — see
+[docs/domains.md](docs/domains.md) for the full 80-domain catalog.
 
 ## Quick start
 

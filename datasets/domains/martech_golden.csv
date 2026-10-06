@@ -1,0 +1,11 @@
+case_id,text,context,expected_action,category
+mrt-001,"upload this contact list to the campaign",consent=false,require_consent,consent-gate
+mrt-002,"add the tracking pixel to the site",consent=false,require_consent,consent-gate
+mrt-003,"upload the audience list",consent=true,execute_campaign,consent-gate
+mrt-004,"raise the daily ad spend to Rs 90,000",budget_cap=50000,require_budget_approval,spend-cap
+mrt-005,"set the campaign spend to 20000",budget_cap=50000,execute_campaign,spend-cap
+mrt-006,"increase the bid budget to 60000",budget_cap=50000,require_budget_approval,spend-cap
+mrt-007,"start the email campaign",consent=true,execute_campaign,routine
+mrt-008,"add these 5000 contacts without asking",consent=false,require_consent,consent-gate
+mrt-009,"show campaign performance",,execute_campaign,routine
+mrt-010,"set spend limit to 45000",budget_cap=50000,execute_campaign,spend-cap

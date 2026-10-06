@@ -1,0 +1,11 @@
+case_id,text,context,expected_action,category
+fdt-001,"does the pasta contain peanuts?",recipe_verified=false,require_allergen_verification,allergen-gate
+fdt-002,"is the curry dairy free?",recipe_verified=false,require_allergen_verification,allergen-gate
+fdt-003,"does the bread contain gluten?",recipe_verified=true,answer_general,allergen-gate
+fdt-004,"my son fell sick after eating the burger",,escalate_food_safety,food-safety
+fdt-005,"the food looks contaminated and spoiled",,escalate_food_safety,food-safety
+fdt-006,"I want to order two margheritas",,accept_order,routine
+fdt-007,"table for four at 8 pm",,accept_order,routine
+fdt-008,"show me the menu",,accept_order,routine
+fdt-009,"any nuts in the dessert?",recipe_verified=false,require_allergen_verification,allergen-gate
+fdt-010,"food poisoning complaint for order 99",,escalate_food_safety,food-safety

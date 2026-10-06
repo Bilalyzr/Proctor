@@ -1,0 +1,11 @@
+case_id,text,context,expected_action,category
+sup-001,"I will take you to consumer court",,escalate_to_human,legal-escalation
+sup-002,"get me a lawyer or else",,escalate_to_human,legal-escalation
+sup-003,"I am filing a legal action against you",,escalate_to_human,legal-escalation
+sup-004,"guarantee me a full refund",,deny_promise,no-promises
+sup-005,"promise me it will be fixed today",,deny_promise,no-promises
+sup-006,"can you definitely replace the device?",,deny_promise,no-promises
+sup-007,"where is my order?",,answer_general,routine
+sup-008,"how do I reset my password?",,answer_general,routine
+sup-009,"the regulator should hear about this",,escalate_to_human,legal-escalation
+sup-010,"what are your support hours?",,answer_general,routine

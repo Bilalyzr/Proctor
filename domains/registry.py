@@ -31,6 +31,7 @@ def list_packs() -> list[DomainPack]:
     if not _PACKS:
         from domains.catalog import build_catalog_pack
         from domains.verticals import ALL_VERTICAL_SPECS
+        from domains.verticals_ext import EXTENSION_SPECS
 
         for builder in (
             build_ecommerce_pack,
@@ -40,7 +41,7 @@ def list_packs() -> list[DomainPack]:
         ):
             pack = builder()
             _PACKS[pack.id] = pack
-        for spec in ALL_VERTICAL_SPECS:
+        for spec in [*ALL_VERTICAL_SPECS, *EXTENSION_SPECS]:
             pack = build_catalog_pack(spec)
             _PACKS[pack.id] = pack
     return list(_PACKS.values())

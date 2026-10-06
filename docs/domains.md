@@ -8,7 +8,7 @@ golden set through the same agent pipeline, gates, guardrails and statistics:
 python -m domains     # or: .venv/bin/python -m domains
 ```
 
-## All 16 industry verticals
+## The 28 domain packs (16 industry groups)
 
 Four **hand-crafted packs** (deep, bespoke policies + tools + guardrails) and
 twelve **catalog packs** (declarative `PackSpec`: ordered rules + hard
@@ -35,6 +35,35 @@ invariants, compiled by `domains/catalog.py` into the same interface).
 
 ★ hand-crafted pack — includes MCP tools, agent-loop integration and
 guardrule/PHI/FERPA extension suites in `tests/domains/`.
+
+## The 80 application-domain catalog
+
+Beyond the 16 industry groups, `domains/appdomains.py` initializes the full
+master list of **80 application domains** (banking, insurance, fintech,
+healthcare, pharma, e-commerce, travel, hospitality, airlines, automotive,
+manufacturing, telecom, media, gaming, education, government, real estate,
+construction, energy, oil & gas, logistics, transportation, food tech,
+agritech, legaltech, HRtech, CRM, ERP, SaaS, MarTech, AdTech, cybersecurity,
+cloud, DevOps, social, collaboration, healthcare insurance, fitness, sports,
+pharmacy e-commerce, delivery apps, ride-hailing, EV, smart home, IoT,
+blockchain, crypto, AI/ML apps, robotics, AR/VR, smart cities, climate tech,
+airport management, maritime, defense, biotech, medical devices, procurement,
+wholesale, fashion, OTT, news, CMS, document management, productivity,
+project management, accounting, payroll, POS, helpdesk, IAM, BI, data
+engineering, scientific software, collaboration, subscriptions,
+marketplaces, booking, digital identity/KYC, and taxation).
+
+Twelve extension packs (`domains/verticals_ext.py`) absorb the domains that
+sit outside the original 16 groups: `foodtech`, `agritech`, `legaltech`,
+`martech` (Mar/AdTech), `social`, `wellness` (fitness/sports), `web3`
+(blockchain/crypto), `aerospace` (defense), `productivity` (CMS/docs/apps/
+projects), `dataai` (data/BI/AI), `support`, `iot_robotics` (smart
+home/IoT/robotics) - bringing the matrix to **28 packs**.
+
+Every one of the 80 domains carries an **executable probe**
+(`tests/domains/test_appdomains.py`): its scenario runs through the pack's
+agent and must land on the policy-correct action. "All 80 initialized" is a
+test-enforced statement, not a claim.
 
 ## What every pack guarantees (the generality proof)
 

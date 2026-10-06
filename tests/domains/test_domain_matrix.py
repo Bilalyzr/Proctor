@@ -15,9 +15,9 @@ pytestmark = [pytest.mark.l2, pytest.mark.smoke]
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
 
-def test_registry_has_sixteen_domains() -> None:
+def test_registry_has_twenty_eight_packs() -> None:
     ids = {pack.id for pack in list_packs()}
-    assert len(ids) == 16  # 4 hand-crafted + 12 catalog verticals
+    assert len(ids) == 28  # 4 hand-crafted + 24 catalog packs
 
 
 def test_unknown_pack_rejected() -> None:

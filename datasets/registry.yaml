@@ -113,3 +113,63 @@ datasets:
     kind: golden
     owner: pharma-qa
     refresh: quarterly
+  - name: foodtech_golden
+    path: datasets/domains/foodtech_golden.csv
+    kind: golden
+    owner: food-qa
+    refresh: quarterly
+  - name: agritech_golden
+    path: datasets/domains/agritech_golden.csv
+    kind: golden
+    owner: agri-qa
+    refresh: quarterly
+  - name: legaltech_golden
+    path: datasets/domains/legaltech_golden.csv
+    kind: golden
+    owner: legal-ops
+    refresh: quarterly
+  - name: martech_golden
+    path: datasets/domains/martech_golden.csv
+    kind: golden
+    owner: growth-qa
+    refresh: quarterly
+  - name: social_golden
+    path: datasets/domains/social_golden.csv
+    kind: golden
+    owner: tands-qa
+    refresh: quarterly
+  - name: wellness_golden
+    path: datasets/domains/wellness_golden.csv
+    kind: golden
+    owner: wellness-qa
+    refresh: quarterly
+  - name: web3_golden
+    path: datasets/domains/web3_golden.csv
+    kind: golden
+    owner: wallet-qa
+    refresh: quarterly
+  - name: aerospace_golden
+    path: datasets/domains/aerospace_golden.csv
+    kind: golden
+    owner: export-control
+    refresh: quarterly
+  - name: productivity_golden
+    path: datasets/domains/productivity_golden.csv
+    kind: golden
+    owner: workspace-qa
+    refresh: quarterly
+  - name: dataai_golden
+    path: datasets/domains/dataai_golden.csv
+    kind: golden
+    owner: data-gov
+    refresh: quarterly
+  - name: support_golden
+    path: datasets/domains/support_golden.csv
+    kind: golden
+    owner: support-lead
+    refresh: quarterly
+  - name: iot_robotics_golden
+    path: datasets/domains/iot_robotics_golden.csv
+    kind: golden
+    owner: device-qa
+    refresh: quarterly

@@ -11,21 +11,22 @@ from domains.catalog import build_catalog_pack
 from domains.registry import get_pack, list_packs
 from domains.runtime import DomainAgent
 from domains.verticals import ALL_VERTICAL_SPECS
+from domains.verticals_ext import EXTENSION_SPECS
 
 pytestmark = [pytest.mark.l2, pytest.mark.l7, pytest.mark.smoke]
 
-CATALOG_IDS = {spec.id for spec in ALL_VERTICAL_SPECS}
+CATALOG_IDS = {spec.id for spec in [*ALL_VERTICAL_SPECS, *EXTENSION_SPECS]}
 ALL_IDS = {pack.id for pack in list_packs()}
 
 
-def test_sixteen_verticals_registered() -> None:
+def test_twenty_eight_packs_registered() -> None:
     assert {
         # hand-crafted
         "ecommerce",
         "healthcare",
         "education",
         "criticalops",
-        # catalog
+        # catalog verticals
         "finance",
         "travel",
         "transportation",
@@ -38,12 +39,25 @@ def test_sixteen_verticals_registered() -> None:
         "energy",
         "realestate",
         "lifesciences",
+        # extension packs (app-domain coverage)
+        "foodtech",
+        "agritech",
+        "legaltech",
+        "martech",
+        "social",
+        "wellness",
+        "web3",
+        "aerospace",
+        "productivity",
+        "dataai",
+        "support",
+        "iot_robotics",
     } == ALL_IDS
-    assert len(ALL_IDS) == 16
+    assert len(ALL_IDS) == 28
 
 
 def test_catalog_specs_are_wellformed() -> None:
-    for spec in ALL_VERTICAL_SPECS:
+    for spec in [*ALL_VERTICAL_SPECS, *EXTENSION_SPECS]:
         actions = set(spec.actions)
         assert spec.default_action in actions, spec.id
         assert {rule.action for rule in spec.rules} <= actions, spec.id
@@ -54,7 +68,7 @@ def test_catalog_specs_are_wellformed() -> None:
 def test_catalog_schemas_compile_and_validate() -> None:
     from pydantic import ValidationError
 
-    for spec in ALL_VERTICAL_SPECS:
+    for spec in [*ALL_VERTICAL_SPECS, *EXTENSION_SPECS]:
         pack = build_catalog_pack(spec)
         # every declared action produces a valid decision
         for action in spec.actions:
@@ -65,7 +79,7 @@ def test_catalog_schemas_compile_and_validate() -> None:
 
 
 def test_catalog_goldens_are_wellformed() -> None:
-    for spec in ALL_VERTICAL_SPECS:
+    for spec in [*ALL_VERTICAL_SPECS, *EXTENSION_SPECS]:
         pack = build_catalog_pack(spec)
         assert pack.golden_csv is not None and pack.golden_csv.exists(), spec.id
         cases = list(pack.golden_csv.open(newline="", encoding="utf-8").readlines())
@@ -75,7 +89,7 @@ def test_catalog_goldens_are_wellformed() -> None:
 def test_every_catalog_invariant_blocks_its_rogue_model() -> None:
     """The generality proof: in EVERY vertical, a model scripted to violate
     the hard policy is corrected by the code-side guard."""
-    for spec in ALL_VERTICAL_SPECS:
+    for spec in [*ALL_VERTICAL_SPECS, *EXTENSION_SPECS]:
         text, context, violating_action = spec.probe or (None, None, None)
         assert text, spec.id
         pack = build_catalog_pack(spec)
@@ -94,7 +108,7 @@ def test_every_catalog_invariant_blocks_its_rogue_model() -> None:
 
 
 def test_catalog_personas_are_compliant_by_construction() -> None:
-    for spec in ALL_VERTICAL_SPECS:
+    for spec in [*ALL_VERTICAL_SPECS, *EXTENSION_SPECS]:
         pack = build_catalog_pack(spec)
         agent = DomainAgent(pack)
         for probe_text in _probe_texts(spec):
@@ -119,6 +133,19 @@ def _probe_texts(spec) -> list[dict]:
         "energy": [("what is my usage this month?", {})],
         "realestate": [("what is the rent for 2BHK?", {})],
         "lifesciences": [("what is the approved dosage range?", {})],
+        # extension packs
+        "foodtech": [("show me the menu", {})],
+        "agritech": [("soil health tips for my field", {})],
+        "legaltech": [("what are your office hours?", {})],
+        "martech": [("show campaign performance", {})],
+        "social": [("change my profile bio", {})],
+        "wellness": [("log my 5k run", {})],
+        "web3": [("show my wallet balance", {})],
+        "aerospace": [("what is the delivery schedule for program A?", {})],
+        "productivity": [("share the meeting notes", {})],
+        "dataai": [("select daily active users by country", {})],
+        "support": [("where is my order?", {})],
+        "iot_robotics": [("turn on the living room lights", {})],
     }
     return [{"text": text, "context": ctx} for text, ctx in benign[spec.id]]
 
