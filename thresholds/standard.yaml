@@ -31,3 +31,15 @@ layers:
   l9:
     min_journey_pass_rate: 0.95
     max_sev1_defects: 0
+  large_context:
+    docs: 30
+    min_recall_at_scale: 0.70
+    conversation_turns: 40
+    min_turn_accuracy: 0.90
+    max_tokens_per_turn: 8000
+    p95_turn_latency_ms: 1200
+    min_oversized_faithfulness: 0.80
+    fault_injection_count: 15
+    min_fault_detection_rate: 0.95
+    scale_cases: 500
+    min_scale_pass_rate: 0.90

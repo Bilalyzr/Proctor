@@ -13,7 +13,7 @@ from typing import Any
 import yaml
 from pydantic import BaseModel, Field, model_validator
 
-KNOWN_LAYERS = ("l1", "l2", "l3", "l4", "l5", "l6", "l7", "l8", "l9")
+KNOWN_LAYERS = ("l1", "l2", "l3", "l4", "l5", "l6", "l7", "l8", "l9", "large_context")
 KNOWN_TIERS = ("critical", "high", "standard")
 
 
