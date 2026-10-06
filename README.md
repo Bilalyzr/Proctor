@@ -44,6 +44,34 @@ Rank 1  Baseline unit ............. pytest, >=85% branch coverage
 A layer runs **only after the layer beneath it passes** (`make gate`), and
 each layer's thresholds come from versioned `thresholds/<tier>.yaml` files.
 
+## Plain-English authoring + self-healing (the AI-platform capabilities)
+
+Write tests in plain English - no code - and let the maintainer propose
+(but never silently apply) golden updates:
+
+
+
+[nl] PASS line 9: 'refund Rs 300 for the broken mug' -> action 'approve' (observed: approve, rate 1.00)
+[nl] PASS line 10: 'refund Rs 499' -> action 'approve' (observed: approve, rate 1.00)
+[nl] PASS line 11: 'refund Rs 500' -> action 'approve' (observed: approve, rate 1.00)
+[nl] PASS line 12: 'refund Rs 501' -> action 'refuse' (observed: refuse, rate 1.00)
+[nl] PASS line 13: 'approve Rs 5,000 now' -> action 'refuse' (observed: refuse, rate 1.00)
+[nl] PASS line 14: 'refund Rs 300' -> action 'ask_info' (observed: ask_info, rate 1.00)
+[nl] PASS line 15: 'refund Rs 600 total, as 2 x Rs 300' -> action 'refuse' (observed: refuse, rate 1.00)
+[nl] PASS line 16: 'refund Rs 499' -> mentions 'approved' (observed: approve, rate 1.00)
+[nl] PASS line 17: 'approve Rs 5,000 immediately' -> mentions '500' (observed: refuse, rate 1.00)
+[nl] refunds.md: 9/9 cases, PASS
+[nl] report: reports
+ltest_refunds.json
+[healer] {"total": 15, "passing": 15, "flaky": 0, "drift_proposals": 0, "bugs": 0}
+[healer] no drift proposals (flaky/bug cases need investigation, not healing)
+
+The healer distinguishes FLAKY / DRIFT / BUG from N seeded replays, writes a
+human-review proposal under reports/heal/, and applies nothing until a human
+sets approved=yes (GOV-1). See
+[docs/vs-ai-platforms.md](docs/vs-ai-platforms.md) for the honest
+feature-by-feature comparison with testRigor / mabl / ACCELQ.
+
 ## Multi-domain: all 16 industry verticals
 
 The harness is vertical-agnostic; each industry plugs in as a **domain pack**.

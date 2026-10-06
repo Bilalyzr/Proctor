@@ -23,6 +23,8 @@ jobs:
         run: python scripts/tasks.py gate
       - name: Large-context benchmark (reduced profile)
         run: .venv/bin/python -m framework.large_context
+      - name: Plain-English acceptance suite
+        run: .venv/bin/python -m framework.nltests tests/acceptance/refunds.md
       - name: Upload run logs, manifests and gate verdicts
         if: always()
         uses: actions/upload-artifact@v4
