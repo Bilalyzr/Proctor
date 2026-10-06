@@ -105,7 +105,7 @@ class AnthropicClient(BaseClient):
         try:
             import anthropic as anthropic_sdk  # type: ignore[import-not-found]
         except ImportError as exc:
-            msg = "anthropic not installed; pip install 'ai-qa-framework[anthropic]'"
+            msg = "anthropic not installed; pip install 'proctor[anthropic]'"
             raise ProviderNotConfigured(msg) from exc
         client = anthropic_sdk.Anthropic(api_key=self._api_key)  # pragma: no cover
         response = client.messages.create(**payload)  # pragma: no cover

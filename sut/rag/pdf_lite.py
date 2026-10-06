@@ -80,7 +80,7 @@ def write_pdf(path: str | Path, title: str, lines: list[str], *, font_size: int 
     )
     assert pages_id == pages_id_placeholder, "object numbering drifted"
     catalog_id = obj(f"<< /Type /Catalog /Pages {pages_id} 0 R >>")
-    info_id = obj(f"<< /Title ({_escape(title)}) /Producer (ai-qa-framework pdf_lite) >>")
+    info_id = obj(f"<< /Title ({_escape(title)}) /Producer (proctor pdf_lite) >>")
 
     out = bytearray(b"%PDF-1.4\n%\xe2\xe3\xcf\xd3\n")
     offsets = [0]
@@ -140,7 +140,7 @@ def extract_text(data: bytes) -> str:
             return "\n".join(
                 page.extract_text() or "" for page in PdfReader(io.BytesIO(data)).pages
             )
-        msg = "compressed PDF: install pypdf ('ai-qa-framework[pdf]') or use an uncompressed export"
+        msg = "compressed PDF: install pypdf ('proctor[pdf]') or use an uncompressed export"
         raise PdfUnsupported(msg)
     lines: list[str] = []
     for stream in _STREAM_RE.findall(data):

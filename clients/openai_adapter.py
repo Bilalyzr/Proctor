@@ -96,7 +96,7 @@ class OpenAIClient(BaseClient):
         try:
             import openai as openai_sdk  # type: ignore[import-not-found]
         except ImportError as exc:
-            msg = "openai not installed; pip install 'ai-qa-framework[openai]'"
+            msg = "openai not installed; pip install 'proctor[openai]'"
             raise ProviderNotConfigured(msg) from exc
         client = openai_sdk.OpenAI(api_key=self._api_key)  # pragma: no cover
         response = client.chat.completions.create(**payload)  # pragma: no cover

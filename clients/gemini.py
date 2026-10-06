@@ -104,7 +104,7 @@ class GeminiClient(BaseClient):
         try:
             from google import genai  # type: ignore[import-not-found]
         except ImportError as exc:
-            msg = "google-genai not installed; pip install 'ai-qa-framework[gemini]'"
+            msg = "google-genai not installed; pip install 'proctor[gemini]'"
             raise ProviderNotConfigured(msg) from exc
         client = genai.Client(api_key=self._api_key)  # pragma: no cover
         response = client.models.generate_content(  # pragma: no cover

@@ -3,7 +3,7 @@
 Playwright + browsers are heavy optional extras; when they are not installed
 these tests SKIP with an explicit message (Rule 7: no silent pretending) and
 the HTTP journeys in test_http_journeys.py carry the gate. CI can enable them
-with `pip install 'ai-qa-framework[playwright]' && playwright install chromium`.
+with `pip install 'proctor[playwright]' && playwright install chromium`.
 """
 
 from __future__ import annotations
@@ -15,7 +15,7 @@ import pytest
 pytestmark = [pytest.mark.l9, pytest.mark.nightly]
 
 PLAYWRIGHT_IMPORTABLE = importlib.util.find_spec("playwright") is not None
-BROWSERS_HINT = "pip install 'ai-qa-framework[playwright]' && playwright install chromium"
+BROWSERS_HINT = "pip install 'proctor[playwright]' && playwright install chromium"
 
 pytestmark += [
     pytest.mark.skipif(

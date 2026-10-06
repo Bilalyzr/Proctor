@@ -28,8 +28,8 @@ Install the optional extras and run once where a real provider applies;
 CI stays offline-first (fallbacks remain the default):
 
 ```bash
-pip install 'ai-qa-framework[ragas]' 'ai-qa-framework[presidio]' \
-            'ai-qa-framework[faiss]'
+pip install 'proctor[ragas]' 'proctor[presidio]' \
+            'proctor[faiss]'
 # garak / pyrit via their own channels; promptfoo via npm
 ```
 
@@ -43,7 +43,7 @@ The two skipped tests in `tests/l9_e2e/test_browser_journeys.py` carry the
 real browser E2E; HTTP journeys hold the L9 gate meanwhile:
 
 ```bash
-pip install 'ai-qa-framework[playwright]'
+pip install 'proctor[playwright]'
 playwright install chromium
 python -m pytest tests/l9_e2e -m l9          # 0 skips expected
 ```

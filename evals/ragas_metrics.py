@@ -151,7 +151,7 @@ class RagasLibraryBackend:
 
     def __init__(self) -> None:
         if not ragas_available():
-            msg = "ragas not installed; pip install 'ai-qa-framework[ragas]'"
+            msg = "ragas not installed; pip install 'proctor[ragas]'"
             raise RuntimeError(msg)
 
     def evaluate_turn(  # pragma: no cover - requires network + keys
