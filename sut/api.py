@@ -10,7 +10,6 @@ keyless and unlimited so offline journeys and CI run unchanged.
 from __future__ import annotations
 
 import time
-from collections import defaultdict
 from collections.abc import Awaitable, Callable
 from pathlib import Path
 from typing import Any
@@ -36,12 +35,16 @@ class TokenBucket:
     def __init__(self, capacity: int, refill_per_second: float) -> None:
         self.capacity = capacity
         self.refill = refill_per_second
-        self._tokens: dict[str, float] = defaultdict(lambda: float(capacity))
-        self._last: dict[str, float] = defaultdict(time.monotonic)
+        self._tokens: dict[str, float] = {}
+        self._last: dict[str, float] = {}
 
     def allow(self, client: str) -> tuple[bool, float]:
         now = time.monotonic()
-        elapsed = now - self._last[client]
+        if client not in self._tokens:
+            # first sight of this client: full bucket, clock starts now
+            self._tokens[client] = float(self.capacity)
+            self._last[client] = now
+        elapsed = max(0.0, now - self._last[client])
         self._last[client] = now
         self._tokens[client] = min(
             float(self.capacity), self._tokens[client] + elapsed * self.refill
