@@ -271,10 +271,15 @@ class TestDatasetRegistry:
         )
         entries = registry["datasets"]
         registered = {entry["path"] for entry in entries}
+        # runtime artifacts (scale-run caches, generated corpora) are not
+        # curated datasets; they are gitignored outputs, not registry inputs
+        runtime_dirs = {"cache", "generated"}
         actual = {
             p.relative_to(REPO_ROOT).as_posix()
             for p in (REPO_ROOT / "datasets").rglob("*")
-            if p.is_file() and p.name != "registry.yaml"
+            if p.is_file()
+            and p.name != "registry.yaml"
+            and not (runtime_dirs & set(p.relative_to(REPO_ROOT / "datasets").parts))
         }
         assert actual <= registered, f"unregistered datasets: {actual - registered}"
 
