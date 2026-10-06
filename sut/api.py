@@ -9,6 +9,8 @@ keyless and unlimited so offline journeys and CI run unchanged.
 
 from __future__ import annotations
 
+import hmac
+import os
 import time
 from collections.abc import Awaitable, Callable
 from pathlib import Path
@@ -22,6 +24,7 @@ from clients.mock import MockClient
 from framework.config import Settings
 from guardrails import GuardrailPipeline
 from sut.agent import RefundAssistant
+from sut.sanitize import sanitize_input
 
 SETTINGS = Settings(_env_file=None)
 PIPELINE = GuardrailPipeline()
@@ -38,8 +41,15 @@ class TokenBucket:
         self._tokens: dict[str, float] = {}
         self._last: dict[str, float] = {}
 
+    max_clients = 10_000  # bounded memory under identity floods (audit A1)
+
     def allow(self, client: str) -> tuple[bool, float]:
         now = time.monotonic()
+        if len(self._tokens) >= self.max_clients and client not in self._tokens:
+            # evict the stalest identities instead of growing forever
+            for stale in sorted(self._last, key=self._last.__getitem__)[: self.max_clients // 10]:
+                self._tokens.pop(stale, None)
+                self._last.pop(stale, None)
         if client not in self._tokens:
             # first sight of this client: full bucket, clock starts now
             self._tokens[client] = float(self.capacity)
@@ -74,7 +84,14 @@ def _assistant() -> RefundAssistant:
 
 
 def _chat_logic(request: ChatRequest) -> ChatResponse:
-    inbound = PIPELINE.check_inbound(request.message)
+    # sanitize BEFORE classifying: the guardrail must inspect the same bytes
+    # the model will see (audit C1 - zero-width/markup reassembly bypass)
+    sanitized = sanitize_input(
+        request.message,
+        max_chars=SETTINGS.sanitize_max_chars,
+        strip_markup=SETTINGS.sanitize_strip_markup,
+    )
+    inbound = PIPELINE.check_inbound(sanitized.text)
     if not inbound.allowed:
         return ChatResponse(
             reply=(
@@ -85,7 +102,7 @@ def _chat_logic(request: ChatRequest) -> ChatResponse:
             blocking_rules=inbound.blocking_rules,
         )
     assistant = _assistant()
-    turn = assistant.handle(request.message, order_id=request.order_id)
+    turn = assistant.handle(sanitized.text, order_id=request.order_id)
     outbound = PIPELINE.check_outbound(turn.decision.message)
     if not outbound.allowed:
         return ChatResponse(
@@ -107,8 +124,16 @@ def create_app(
     api_key: str | None = None,
     rate_limit: tuple[int, float] | None = (30, 10.0),
 ) -> FastAPI:
-    """Build the app with the requested API-security posture."""
-    app = FastAPI(title="ShopFast Refund Assistant", version="1.1.0")
+    """Build the app with the requested API-security posture.
+
+    Security properties (audit run-1 fixes):
+    - the rate limiter keys buckets on the SERVER-derived client host,
+      never on a client-supplied header value, and runs BEFORE auth so
+      failed-auth guessing is throttled too (A1/A2/A5);
+    - auth uses a constant-time comparison (A3);
+    - /health is exempt from both controls for healthchecks.
+    """
+    app = FastAPI(title="ShopFast Refund Assistant", version="1.2.0")
     bucket = TokenBucket(*rate_limit) if rate_limit else None
 
     @app.middleware("http")
@@ -117,23 +142,25 @@ def create_app(
     ) -> Any:
         # /health stays open: container healthchecks and load balancers
         # probe it without credentials
-        if api_key is not None and request.url.path != "/health":
-            provided = request.headers.get("X-API-Key", "")
-            if provided != api_key:
-                return JSONResponse(
-                    status_code=401,
-                    content={"detail": "invalid or missing API key"},
-                )
-        if bucket is not None and request.url.path == "/chat" and request.method == "POST":
-            client = request.headers.get("X-API-Key") or (
-                request.client.host if request.client else "anonymous"
-            )
-            allowed, retry_after = bucket.allow(client)
+        if request.url.path == "/health":
+            return await call_next(request)
+        # throttle first, on a server-derived identity (client host), so
+        # both authenticated traffic AND failed-auth guessing are bounded
+        if bucket is not None:
+            identity = request.client.host if request.client else "anonymous"
+            allowed, retry_after = bucket.allow(identity)
             if not allowed:
                 return JSONResponse(
                     status_code=429,
                     headers={"Retry-After": f"{retry_after:.2f}"},
                     content={"detail": "rate limit exceeded"},
+                )
+        if api_key is not None:
+            provided = request.headers.get("X-API-Key", "")
+            if not hmac.compare_digest(provided.encode(), api_key.encode()):
+                return JSONResponse(
+                    status_code=401,
+                    content={"detail": "invalid or missing API key"},
                 )
         return await call_next(request)
 
@@ -162,5 +189,10 @@ def create_app(
     return app
 
 
-# default deployment: keyless, unlimited - offline journeys and CI unchanged
-app = create_app(api_key=None, rate_limit=None)
+# deployment: authenticated + rate-limited when AIQA_API_KEY is set;
+# keyless offline posture otherwise (CI journeys unchanged)
+_DEPLOY_KEY = os.environ.get("AIQA_API_KEY") or None
+app = create_app(
+    api_key=_DEPLOY_KEY,
+    rate_limit=(30, 10.0) if _DEPLOY_KEY else None,
+)

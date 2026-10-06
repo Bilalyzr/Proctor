@@ -13,7 +13,10 @@ from pathlib import Path
 from typing import Any
 
 SECRET_SHAPES: list[tuple[str, re.Pattern[str]]] = [
-    ("openai-key", re.compile(r"\bsk-[A-Za-z0-9]{20,}\b")),
+    (
+        "openai-key",
+        re.compile(r"\bsk-(?:proj|svcacct)-[A-Za-z0-9_-]{20,}\b|\bsk-[A-Za-z0-9]{20,}\b"),
+    ),
     ("google-key", re.compile(r"\bAIza[0-9A-Za-z_-]{35}\b")),
     ("aws-key", re.compile(r"\bAKIA[0-9A-Z]{16}\b")),
     ("github-token", re.compile(r"\bgh[pousr]_[A-Za-z0-9]{36,}\b")),
@@ -26,7 +29,9 @@ SECRET_SHAPES: list[tuple[str, re.Pattern[str]]] = [
 ]
 
 ALLOWED_FILES = {".env.example"}  # documented placeholders only
-SKIP_DIRS = {".venv", ".git", "__pycache__", "node_modules", ".pytest_cache", "reports", "datasets"}
+# datasets/ IS scanned (promoted feedback CSVs live there - audit E3);
+# reports/ stays skipped: pure runtime artifacts, gitignored
+SKIP_DIRS = {".venv", ".git", "__pycache__", "node_modules", ".pytest_cache", "reports"}
 
 BIND_PATTERNS = [
     re.compile(r"\.bind\(\s*\(?\s*[\"'](0\.0\.0\.0|::)[\"']"),
@@ -44,6 +49,23 @@ def scan_secrets(root: str | Path) -> dict[str, Any]:
         if any(part in SKIP_DIRS for part in path.parts):
             continue
         if path.name in ALLOWED_FILES:
+            continue
+        # extensionless dotfiles like .env carry secrets (audit E3)
+        if path.name.startswith(".env"):
+            scanned += 1
+            try:
+                text = path.read_text(encoding="utf-8", errors="ignore")
+            except OSError:
+                continue
+            for rule, pattern in SECRET_SHAPES:
+                for match in pattern.finditer(text):
+                    findings.append(
+                        {
+                            "file": path.as_posix(),
+                            "rule": rule,
+                            "fragment": match.group(0)[:8] + "...",
+                        }
+                    )
             continue
         if path.suffix.lower() not in {
             ".py",

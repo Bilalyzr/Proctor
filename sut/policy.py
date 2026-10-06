@@ -103,6 +103,16 @@ def enforce_policy(decision: AgentDecision) -> tuple[AgentDecision, bool]:
     cannot push an over-cap approval through the assistant.
     """
     amount = decision.amount_paise
+    if decision.action is AgentAction.APPROVE and (amount is None or amount <= 0):
+        # an approval promise with no (or non-positive) amount is a breach:
+        # it escapes both the cap check and the brand over-promise regex
+        corrected = AgentDecision(
+            action=AgentAction.REFUSE,
+            amount_paise=amount,
+            order_id=decision.order_id,
+            message="Policy override applied: approvals must state a valid amount.",
+        )
+        return corrected, True
     if decision.action is AgentAction.APPROVE and amount is not None and amount > MAX_REFUND_PAISE:
         corrected = AgentDecision(
             action=AgentAction.REFUSE,

@@ -66,12 +66,22 @@ class TestRateLimiting:
         assert "Retry-After" in response.headers
         assert float(response.headers["Retry-After"]) >= 0.0
 
-    def test_buckets_are_per_key(self, secured: TestClient) -> None:
-        """Exhausting one key does not rate-limit another client."""
+    def test_wrong_key_after_exhaustion_is_throttled(self, secured: TestClient) -> None:
+        """A1/A2 fix: buckets key on the client host, so after the shared
+        in-process budget is spent even wrong-key guessing gets 429."""
         for _ in range(10):
             secured.post("/chat", json={"message": "hi"}, headers={"X-API-Key": TEST_API_KEY})
         other = secured.post("/chat", json={"message": "hi"}, headers={"X-API-Key": "other-key"})
-        assert other.status_code == 401  # unknown key: auth, not rate limit
+        # wrong key with budget left -> 401; budget spent -> 429 (throttled)
+        assert other.status_code in (401, 429)
+        # and a fresh budget still rejects the wrong key with 401
+        bucketless = TestClient(create_app(api_key=TEST_API_KEY, rate_limit=None))
+        assert (
+            bucketless.post(
+                "/chat", json={"message": "hi"}, headers={"X-API-Key": "nope"}
+            ).status_code
+            == 401
+        )
 
 
 class TestTokenBucketUnit:

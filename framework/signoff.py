@@ -8,10 +8,14 @@ digest and the run-verdict digest, and a human supplies approver + decision.
 from __future__ import annotations
 
 import json
+import re
 import time
 from pathlib import Path
 
 from framework.artifacts import sha256_file
+
+# Only these decision values open the release gate (case-insensitive).
+APPROVAL_DECISIONS = {"approved", "go", "approved-with-conditions"}
 
 TEMPLATE = """# Release Sign-off Record (GOV-1)
 
@@ -84,9 +88,16 @@ def verify_signoff(
         return False
     if sha256_file(verdict_path) not in text:
         return False
-    if "AI cannot" in text and "Approver" in text:
-        pass  # template marker present
-    return "Approver (name, role)**:" in text and "- **" in text
+    # Decision must be an explicit human approval (GOV-1: an AI evaluator or
+    # a rejected/deferred decision must never open the release gate).
+    decision_match = re.search(r"- \*\*Decision\*\*:\s*(.+?)\s*$", text, re.MULTILINE)
+    if decision_match is None:
+        return False
+    decision = decision_match.group(1).strip().strip("`").lower()
+    if decision not in APPROVAL_DECISIONS:
+        return False
+    approver_match = re.search(r"- \*\*Approver \(name, role\)\*\*:\s*(\S.*)", text)
+    return approver_match is not None and bool(approver_match.group(1).strip())
 
 
 def verdict_passed(verdict_path: str | Path) -> bool:

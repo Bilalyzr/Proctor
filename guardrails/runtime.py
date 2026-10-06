@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import json
 import time
+from collections import deque
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -67,7 +68,8 @@ class GuardrailPipeline:
         self.dlp = dlp if dlp is not None else DLPGuardrail()
         self.infra = infra if infra is not None else InfraMaskGuardrail()
         self.brand = brand if brand is not None else BrandSafetyGuardrail()
-        self.events: list[GuardrailEvent] = []
+        # bounded ring: a long-running server must not grow this forever
+        self.events: deque[GuardrailEvent] = deque(maxlen=5000)
 
     # ----------------------------------------------------------------- inbound
     def check_inbound(self, text: str) -> PipelineVerdict:
@@ -117,9 +119,10 @@ class GuardrailPipeline:
         self.events.extend(events)
         allowed = not brand.blocked
         final_text = infra.text if allowed else ""
-        if is_rag_context:
-            # RAG context is masked, not dropped: the model still needs the text
-            allowed = True
+        # is_rag_context changes only the DEFAULT: benign-but-masked context
+        # is returned for the model to use. Brand-blocked content is dropped
+        # in both modes - never allowed=True with empty text.
+        _ = is_rag_context
         return PipelineVerdict(allowed=allowed, text=final_text, events=events)
 
     # ------------------------------------------------------------------- stats

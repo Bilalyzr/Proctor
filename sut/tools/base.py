@@ -63,13 +63,31 @@ class ToolSpec(BaseModel):
 
 
 class RefundLedger:
-    """In-memory refund ledger: cumulative cap enforcement per order."""
+    """Refund ledger with optional append-only persistence.
 
-    def __init__(self) -> None:
+    Without a ``persist_path`` the ledger is in-memory (tests, single-process
+    tools). With one, records append to a JSONL file and are reloaded on
+    construction, so the cumulative per-order cap survives restarts and is
+    shared by processes using the same file (audit D2).
+    """
+
+    def __init__(self, persist_path: Path | None = None) -> None:
         self._by_order: dict[str, list[int]] = {}
+        self._persist_path = persist_path
+        if persist_path is not None and persist_path.exists():
+            for line in persist_path.read_text(encoding="utf-8").splitlines():
+                if line.strip():
+                    entry = json.loads(line)
+                    self._by_order.setdefault(entry["order_id"], []).append(entry["amount_paise"])
 
     def record(self, order_id: str, amount_paise: int) -> None:
         self._by_order.setdefault(order_id, []).append(amount_paise)
+        if self._persist_path is not None:
+            self._persist_path.parent.mkdir(parents=True, exist_ok=True)
+            with self._persist_path.open("a", encoding="utf-8") as handle:
+                handle.write(
+                    json.dumps({"order_id": order_id, "amount_paise": amount_paise}) + "\n"
+                )
 
     def total_for(self, order_id: str) -> int:
         return sum(self._by_order.get(order_id, []))
@@ -161,8 +179,13 @@ ESCALATE_SCHEMA = {
 }
 
 
+DEFAULT_LEDGER_PATH = Path(__file__).resolve().parents[1] / "data" / "refund_ledger.jsonl"
+
+
 def build_default_registry(
-    orders: dict[str, Any] | None = None, ledger: RefundLedger | None = None
+    orders: dict[str, Any] | None = None,
+    ledger: RefundLedger | None = None,
+    persist_ledger: bool = True,
 ) -> ToolRegistry:
     """The three SUT tools: order_lookup, issue_refund, escalate_to_human."""
 
@@ -211,6 +234,10 @@ def build_default_registry(
         registry.escalations.append(ticket)
         return ToolResult.success(ticket)
 
+    if ledger is None:
+        # durable by default so the cumulative cap survives restarts (D2);
+        # tests pass an explicit fresh RefundLedger() for isolation
+        ledger = RefundLedger(persist_path=DEFAULT_LEDGER_PATH if persist_ledger else None)
     registry = ToolRegistry(orders=orders, ledger=ledger)
     registry.register(
         ToolSpec(

@@ -25,6 +25,9 @@ htmlcov/
 # local secrets - never commit
 .env
 
+# runtime refund ledger (audit D2 durable cumulative cap)
+sut/data/refund_ledger.jsonl
+
 # generated datasets (DVC-tracked in a real deployment)
 datasets/synthetic/generated/
 datasets/synthetic/cache/

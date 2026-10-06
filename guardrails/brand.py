@@ -53,7 +53,7 @@ class BrandSafetyGuardrail:
     engine = "lexicon-brand-v1"
 
     def inspect_inbound(self, text: str) -> BrandVerdict:
-        lowered = text.lower()
+        lowered = text.casefold()
         for term in TOXIC_LEXICON:
             if term in lowered:
                 return BrandVerdict(True, "brand:toxicity-inbound", term)
@@ -63,7 +63,7 @@ class BrandSafetyGuardrail:
         return BrandVerdict(False, None)
 
     def inspect_outbound(self, text: str) -> BrandVerdict:
-        lowered = text.lower()
+        lowered = text.casefold()
         for term in TOXIC_LEXICON:
             if term in lowered:
                 return BrandVerdict(True, "brand:toxicity-outbound", term)

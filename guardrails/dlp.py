@@ -31,7 +31,7 @@ PATTERNS: list[tuple[str, re.Pattern[str], bool]] = [
     ("card-pan", re.compile(r"\b(?:\d[ -]?){13,19}\b"), True),
     (
         "aadhaar-like",
-        re.compile(r"(?<!\d)(?<!\d )\d{4}\s\d{4}\s\d{4}(?!\d)(?!\s\d)"),
+        re.compile(r"(?<!\d)(?<!\d[\s-])\d{4}[\s-]\d{4}[\s-]\d{4}(?!\d)(?![\s-]\d)"),
         False,
     ),
     ("ipv4", re.compile(r"\b(?:\d{1,3}\.){3}\d{1,3}\b"), False),
@@ -100,9 +100,9 @@ class DLPGuardrail:
                     if len(digits) < 13 or not _luhn_ok(digits):
                         continue  # not a real PAN: avoid false positives
                 findings.append({"rule": f"dlp:{rule}", "fragment": fragment[:6] + "..."})
-        lowered = text.lower()
+        folded = text.casefold()
         for keyword in self.keywords:
-            if keyword in lowered:
+            if keyword.casefold() in folded:
                 findings.append({"rule": "dlp:confidential", "fragment": keyword})
         for rule, pattern, _ in self.domain_patterns:
             for match in pattern.finditer(text):
@@ -126,7 +126,7 @@ class DLPGuardrail:
         for _rule, pattern, mask in self.domain_patterns:
             cleaned = pattern.sub(mask, cleaned)
         for keyword in self.keywords:
-            if keyword in cleaned.lower():
+            if keyword.casefold() in cleaned.casefold():
                 cleaned = re.sub(re.escape(keyword), "[confidential-masked]", cleaned, flags=re.I)
         return MaskResult(
             text=cleaned,

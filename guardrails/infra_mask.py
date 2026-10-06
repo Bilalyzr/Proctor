@@ -11,7 +11,11 @@ from dataclasses import dataclass
 from typing import Any
 
 INFRA_RULES: list[tuple[str, re.Pattern[str], str]] = [
-    ("openai-key", re.compile(r"\bsk-[A-Za-z0-9]{20,}\b"), "[key-masked]"),
+    (
+        "openai-key",
+        re.compile(r"\bsk-(?:proj|svcacct)-[A-Za-z0-9_-]{20,}\b|\bsk-[A-Za-z0-9]{20,}\b"),
+        "[key-masked]",
+    ),
     ("google-key", re.compile(r"\bAIza[0-9A-Za-z_-]{35}\b"), "[key-masked]"),
     ("aws-key", re.compile(r"\bAKIA[0-9A-Z]{16}\b"), "[key-masked]"),
     ("github-token", re.compile(r"\bgh[pousr]_[A-Za-z0-9]{36,}\b"), "[key-masked]"),

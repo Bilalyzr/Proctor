@@ -54,6 +54,22 @@ def _expected_for(question: str) -> str:
     return "approve" if amount <= MAX_REFUND_PAISE else "refuse"
 
 
+_FORMULA_PREFIXES = ("=", "+", "-", "@", chr(9), chr(13))
+
+
+def csv_safe_cell(value: str) -> str:
+    """Neutralize spreadsheet formula injection (audit E1).
+
+    Cells derived from untrusted text that start with =, +, -, @ or a
+    tab/CR get a leading apostrophe so Excel/LibreOffice treat them as
+    text instead of formulas/DDE payloads.
+    """
+    stripped = value.lstrip()
+    if stripped.startswith(_FORMULA_PREFIXES):
+        return "'" + value
+    return value
+
+
 def promote_to_regression(rows: list[dict[str, str]], out_path: str | Path) -> list[dict[str, str]]:
     """Turn failure signals into golden regression rows (deduped by question)."""
     promoted: list[dict[str, str]] = []
@@ -77,8 +93,8 @@ def promote_to_regression(rows: list[dict[str, str]], out_path: str | Path) -> l
         promoted.append(
             {
                 "case_id": f"fb-{len(existing) + len(promoted) + 1:03d}",
-                "text": question,
-                "order_id": row.get("order_id", "").strip() or "",
+                "text": csv_safe_cell(question),
+                "order_id": csv_safe_cell(row.get("order_id", "").strip()),
                 "expected_action": _expected_for(question),
                 "category": "from_feedback",
             }
