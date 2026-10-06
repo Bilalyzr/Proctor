@@ -1,0 +1,12 @@
+case_id,text,context,expected_action,category
+trv-001,"book a ticket to Delhi for Friday",,confirm_booking,routine
+trv-002,"reserve two seats on the morning flight",,confirm_booking,routine
+trv-003,"cancel my flight please",hours_before_departure=25,free_cancellation,window-boundary
+trv-004,"cancel my booking",hours_before_departure=24,free_cancellation,window-boundary
+trv-005,"cancel my flight",hours_before_departure=23,fee_cancellation,window-boundary
+trv-006,"cancel the ticket",hours_before_departure=3,fee_cancellation,window-boundary
+trv-007,"cancel my flight",hours_before_departure=-1,deny_change,no-show
+trv-008,"can I get a free upgrade?",,deny_change,no-upgrade-promise
+trv-009,"upgrade me to business class",,deny_change,no-upgrade-promise
+trv-010,"what is my baggage allowance?",,answer_general,routine
+trv-011,"cancel my booking",hours_before_departure=48,free_cancellation,window-boundary

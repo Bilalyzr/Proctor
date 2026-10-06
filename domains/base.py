@@ -15,7 +15,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Protocol
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class DomainFacts(BaseModel):
@@ -24,6 +24,7 @@ class DomainFacts(BaseModel):
     text: str
     wants_records: bool = False
     authorized: bool = False
+    extras: dict[str, Any] = Field(default_factory=dict)
 
 
 class DomainPolicy(Protocol):

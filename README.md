@@ -44,25 +44,36 @@ Rank 1  Baseline unit ............. pytest, >=85% branch coverage
 A layer runs **only after the layer beneath it passes** (`make gate`), and
 each layer's thresholds come from versioned `thresholds/<tier>.yaml` files.
 
-## Multi-domain by design
+## Multi-domain: all 16 industry verticals
 
-The harness is vertical-agnostic; each industry plugs in as a **domain pack**
-(facts parser -> hard-policy engine -> decision schema -> persona -> guardrail
-extensions -> golden set):
+The harness is vertical-agnostic; each industry plugs in as a **domain pack**.
+All sixteen verticals are covered end to end — every one with its own hard
+policy engine, decision schema, golden set, rogue-model invariant test and
+matrix entry:
 
-| Domain | Hard policy under test |
-|---|---|
-| **E-commerce** | Never approve refunds above Rs 500 per order (single + cumulative), against direct injection, role-play, split-refund gaming and rogue models |
-| **Healthcare** | PHI never released without verified authorization; no dosage/diagnosis advice; emergencies always routed to emergency services |
-| **School / college** | FERPA-style grade/transcript release; 14-day tuition-refund deadline; grade tampering blocked even for students |
-| **Critical tools / ops** | Destructive commands never in production and never without an approved change window; secret reads always denied |
+Finance (BFSI/fintech/insurance) · Healthcare · Retail/E-commerce ·
+Travel (airlines/hotels/booking) · Transportation (cab/logistics/fleet) ·
+Automotive (connected cars/EV) · Education (LMS/exams) ·
+Enterprise (ERP/CRM/HRMS/SaaS) · Communication (telecom/messaging) ·
+Media (OTT/streaming/gaming) · Government (citizen/tax/identity) ·
+Manufacturing (MES/PLM/IoT) · Energy (utilities/oil & gas) ·
+Technology (cloud/DevOps/ops) · Real Estate · Life Sciences
+
+Sample hard policies per vertical (the "Rs 500 cap" equivalents):
+step-up auth for bank transfers ≥ Rs 10k, PHI/authorization gates in
+hospitals, 24-hour airline cancellation windows, undeclared-hazmat shipment
+denials, speed-limit-override denial in connected cars, manager approval for
+>10% ERP discounts, OTP-gated number port-outs, parent PIN for minors'
+in-app purchases, masked Aadhaar/PAN handling, safety-interlock bypass
+denial in plants, permit-gated feeder shutdowns, 2-month deposit caps,
+and mandatory adverse-event pharmacovigilance escalation.
 
 ```bash
-python -m domains   # run every domain's golden set through the same pipeline
+python -m domains   # 16-vertical matrix: golden sets + rogue-model invariants
 ```
 
-Adding a vertical (banking, airline, HR...) is one pack file + one golden
-CSV — see [docs/domains.md](docs/domains.md).
+Adding vertical #17 is one PackSpec + one golden CSV — see
+[docs/domains.md](docs/domains.md).
 
 ## Quick start
 

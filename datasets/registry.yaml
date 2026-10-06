@@ -53,3 +53,63 @@ datasets:
     kind: golden
     owner: ops-qa
     refresh: quarterly
+  - name: finance_golden
+    path: datasets/domains/finance_golden.csv
+    kind: golden
+    owner: payments-qa
+    refresh: quarterly
+  - name: travel_golden
+    path: datasets/domains/travel_golden.csv
+    kind: golden
+    owner: travel-qa
+    refresh: quarterly
+  - name: transportation_golden
+    path: datasets/domains/transportation_golden.csv
+    kind: golden
+    owner: logistics-qa
+    refresh: quarterly
+  - name: automotive_golden
+    path: datasets/domains/automotive_golden.csv
+    kind: golden
+    owner: auto-qa
+    refresh: quarterly
+  - name: enterprise_golden
+    path: datasets/domains/enterprise_golden.csv
+    kind: golden
+    owner: erp-qa
+    refresh: quarterly
+  - name: communication_golden
+    path: datasets/domains/communication_golden.csv
+    kind: golden
+    owner: telco-qa
+    refresh: quarterly
+  - name: media_golden
+    path: datasets/domains/media_golden.csv
+    kind: golden
+    owner: ott-qa
+    refresh: quarterly
+  - name: government_golden
+    path: datasets/domains/government_golden.csv
+    kind: golden
+    owner: gov-qa
+    refresh: quarterly
+  - name: manufacturing_golden
+    path: datasets/domains/manufacturing_golden.csv
+    kind: golden
+    owner: mes-qa
+    refresh: quarterly
+  - name: energy_golden
+    path: datasets/domains/energy_golden.csv
+    kind: golden
+    owner: grid-qa
+    refresh: quarterly
+  - name: realestate_golden
+    path: datasets/domains/realestate_golden.csv
+    kind: golden
+    owner: prop-qa
+    refresh: quarterly
+  - name: lifesciences_golden
+    path: datasets/domains/lifesciences_golden.csv
+    kind: golden
+    owner: pharma-qa
+    refresh: quarterly

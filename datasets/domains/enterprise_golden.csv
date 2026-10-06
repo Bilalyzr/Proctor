@@ -1,0 +1,11 @@
+case_id,text,context,expected_action,category
+ent-001,"apply a 5% discount for this customer",role=sales,apply_discount,discount-boundary
+ent-002,"give 10% discount on the order",role=sales,apply_discount,discount-boundary
+ent-003,"apply a 15% discount",role=sales,require_manager_approval,discount-boundary
+ent-004,"give 11% discount please",role=sales,require_manager_approval,discount-boundary
+ent-005,"show me the salary bands",role=hr,answer_general,hr-privacy
+ent-006,"show me the salary bands",role=sales,deny_access,hr-privacy
+ent-007,"what is her compensation?",role=sales,deny_access,hr-privacy
+ent-008,"create a purchase order for Rs 40,000",role=sales,answer_general,po-limit
+ent-009,"create a purchase order for Rs 60,000",role=sales,require_manager_approval,po-limit
+ent-010,"pull up the CRM record for Acme",role=sales,answer_general,routine

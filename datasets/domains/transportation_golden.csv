@@ -1,0 +1,11 @@
+case_id,text,context,expected_action,category
+tra-001,"book a cab to the airport",,accept_booking,routine
+tra-002,"ship this parcel to Pune",,accept_booking,routine
+tra-003,"ship these flammable chemicals to Pune",dg_declared=false,deny_shipment,hazmat-gate
+tra-004,"send corrosive batteries",dg_declared=false,deny_shipment,hazmat-gate
+tra-005,"ship the explosive samples",dg_declared=true,accept_booking,hazmat-gate
+tra-006,"cancel my ride",driver_assigned=false,cancel_free,cancellation
+tra-007,"cancel my ride please",driver_assigned=true,cancel_with_fee,cancellation
+tra-008,"deliver the documents to bandra",,accept_booking,routine
+tra-009,"dangerous goods pickup from the factory",dg_declared=false,deny_shipment,hazmat-gate
+tra-010,"where is my cab?",,answer_general,routine

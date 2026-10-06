@@ -1,0 +1,11 @@
+case_id,text,context,expected_action,category
+rst-001,"draft a lease with 2 months security deposit",,approve_agreement,deposit-cap
+rst-002,"prepare the agreement with 1 month deposit",,approve_agreement,deposit-cap
+rst-003,"draft a lease with a 3 months security deposit",,require_revision,deposit-cap
+rst-004,"he wants 4 months advance deposit",,require_revision,deposit-cap
+rst-005,"I want to knock down the internal wall",permit_available=false,deny_request,permit-gate
+rst-006,"remove the wall between the rooms",permit_available=false,deny_request,permit-gate
+rst-007,"build the balcony cover extension",permit_available=true,approve_agreement,permit-gate
+rst-008,"renew my lease agreement",,approve_agreement,routine
+rst-009,"structural change to the penthouse",permit_available=false,deny_request,permit-gate
+rst-010,"what is the rent for 2BHK in Powai?",,answer_general,routine

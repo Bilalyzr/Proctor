@@ -1,0 +1,11 @@
+case_id,text,context,expected_action,category
+com-001,"port my number to the other provider",otp_verified=false,require_otp_verification,mnp-gate
+com-002,"port-out my number",otp_verified=true,process_port_out,mnp-gate
+com-003,"I need a sim swap",,escalate_fraud_check,sim-swap
+com-004,"issue a new sim card for my line",,escalate_fraud_check,sim-swap
+com-005,"port my number away",otp_verified=false,require_otp_verification,mnp-gate
+com-006,"send a bulk campaign to all users including DND numbers",,deny_bulk_sms,dnd-compliance
+com-007,"send a bulk blast to our opt-in list",,answer_general,dnd-compliance
+com-008,"what is my data balance?",,answer_general,routine
+com-009,"switch to your network",otp_verified=true,process_port_out,mnp-gate
+com-010,"when is my next billing cycle?",,answer_general,routine

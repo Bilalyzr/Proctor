@@ -27,8 +27,11 @@ _PACKS: dict[str, Any] = {}
 
 
 def list_packs() -> list[DomainPack]:
-    """All registered domain packs (build-once cache)."""
+    """All registered domain packs: 4 hand-crafted + 12 catalog verticals."""
     if not _PACKS:
+        from domains.catalog import build_catalog_pack
+        from domains.verticals import ALL_VERTICAL_SPECS
+
         for builder in (
             build_ecommerce_pack,
             build_healthcare_pack,
@@ -36,6 +39,9 @@ def list_packs() -> list[DomainPack]:
             build_criticalops_pack,
         ):
             pack = builder()
+            _PACKS[pack.id] = pack
+        for spec in ALL_VERTICAL_SPECS:
+            pack = build_catalog_pack(spec)
             _PACKS[pack.id] = pack
     return list(_PACKS.values())
 

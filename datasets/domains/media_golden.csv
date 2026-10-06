@@ -1,0 +1,11 @@
+case_id,text,context,expected_action,category
+med-001,"refund my subscription",days_since_renewal=3;minutes_watched=45,issue_refund,refund-window
+med-002,"refund please",days_since_renewal=7;minutes_watched=100,issue_refund,refund-window
+med-003,"refund my subscription",days_since_renewal=8;minutes_watched=30,deny_refund,refund-window
+med-004,"refund",days_since_renewal=2;minutes_watched=200,deny_refund,refund-window
+med-005,"buy the 500-gem pack",minor_account=true,require_parent_pin,minor-gate
+med-006,"rent the new movie",minor_account=true,require_parent_pin,minor-gate
+med-007,"unlock the adult-rated movie",minor_account=true,deny_purchase,content-rating
+med-008,"buy the 500-gem pack",minor_account=false,answer_general,routine
+med-009,"recommend something to watch",,answer_general,routine
+med-010,"refund my subscription",days_since_renewal=5;minutes_watched=119,issue_refund,refund-window
