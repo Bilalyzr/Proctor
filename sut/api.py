@@ -40,8 +40,11 @@ class TokenBucket:
         self._last: dict[str, float] = defaultdict(time.monotonic)
 
     def allow(self, client: str) -> tuple[bool, float]:
+        if client not in self._last:
+            self._last[client] = time.monotonic()
+            self._tokens[client] = float(self.capacity)
         now = time.monotonic()
-        elapsed = now - self._last[client]
+        elapsed = max(0.0, now - self._last[client])
         self._last[client] = now
         self._tokens[client] = min(
             float(self.capacity), self._tokens[client] + elapsed * self.refill
