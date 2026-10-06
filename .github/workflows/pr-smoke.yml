@@ -18,6 +18,15 @@ jobs:
         run: python scripts/tasks.py test
       - name: Lint and types
         run: python scripts/tasks.py lint
+      - name: Dependency security scan (pip-audit)
+        run: |
+          .venv/bin/python -m pip install --quiet pip-audit
+          .venv/bin/python -m pip_audit --skip-editable
+        continue-on-error: true # report-only for now; enforce once baselined (docs/TODO.md)
+      - name: Deployment validation (docker build + compose config)
+        run: |
+          docker build -t proctor/sut:ci .
+          docker compose config --quiet
       - name: Upload run artifacts
         if: always()
         uses: actions/upload-artifact@v4

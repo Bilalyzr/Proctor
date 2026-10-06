@@ -51,12 +51,18 @@ def live_server():
     thread.join(timeout=5)
 
 
-@pytest.fixture(scope="module")
-def browser(live_server):
+ENGINES = ("chromium", "firefox", "webkit")  # cross-browser coverage
+
+
+@pytest.fixture(scope="module", params=ENGINES)
+def browser(request, live_server):
     from playwright.sync_api import sync_playwright
 
     with sync_playwright() as pw:
-        launched = pw.chromium.launch(headless=True)
+        try:
+            launched = getattr(pw, request.param).launch(headless=True)
+        except Exception:  # engine binary not installed on this machine
+            pytest.skip(f"{request.param} not installed; run: playwright install {request.param}")
         yield launched
         launched.close()
 

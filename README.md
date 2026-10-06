@@ -138,6 +138,15 @@ MCP-1/2, SEC-1...5, PRD-1...3 — maps to code and tests in
 [docs/traceability.md](docs/traceability.md), and a test enforces it: a
 missing row, a dead path, or a phase backlog fails the build.
 
+## End-to-end checklist coverage
+
+Every item of the 12-area end-to-end AI QA checklist (~70 items: model
+metrics P/R/F1, bias/fairness, explainability, auth + rate limiting, load
+and throughput testing, deployment validation, monitoring, continuous
+improvement...) is mapped to status + evidence in
+[docs/checklist-coverage.md](docs/checklist-coverage.md), enforced by a
+test that fails on dead evidence or silent status inflation.
+
 ## Pending work
 
 Tracked in [docs/TODO.md](docs/TODO.md): P1 real-model validation run

@@ -185,3 +185,56 @@ def spearman_rho(x: Sequence[float], y: Sequence[float]) -> float:
     if denom_x == 0.0 or denom_y == 0.0:
         return 0.0  # constant input carries no rank information
     return numerator / (denom_x * denom_y)
+
+
+# ------------------------------------------------------------ classifier metrics
+
+
+def confusion_matrix(
+    predicted: Sequence[object], actual: Sequence[object]
+) -> dict[tuple[object, object], int]:
+    """Pairwise counts keyed by (predicted, actual) - label-agnostic."""
+    if len(predicted) != len(actual):
+        msg = f"length mismatch: {len(predicted)} vs {len(actual)}"
+        raise ValueError(msg)
+    counts: dict[tuple[object, object], int] = {}
+    for pred, truth in zip(predicted, actual, strict=True):
+        counts[(pred, truth)] = counts.get((pred, truth), 0) + 1
+    return counts
+
+
+def precision_recall_f1(predicted: Sequence[bool], actual: Sequence[bool]) -> dict[str, float]:
+    """Binary precision/recall/F1 (positive class = True)."""
+    matrix = confusion_matrix(predicted, actual)
+    tp = matrix.get((True, True), 0)
+    fp = matrix.get((True, False), 0)
+    fn = matrix.get((False, True), 0)
+    precision = tp / (tp + fp) if (tp + fp) else 0.0
+    recall = tp / (tp + fn) if (tp + fn) else 0.0
+    f1 = 2 * precision * recall / (precision + recall) if (precision + recall) else 0.0
+    return {"precision": precision, "recall": recall, "f1": f1, "tp": tp, "fp": fp, "fn": fn}
+
+
+def slice_parity(
+    slices: dict[str, Sequence[bool]],
+    *,
+    max_gap: float = 0.05,
+) -> dict[str, object]:
+    """Blueprint Domain-2 gate: no slice more than ``max_gap`` below overall."""
+    overall = [value for values in slices.values() for value in values]
+    overall_rate = sum(overall) / len(overall) if overall else 0.0
+    per_slice = {
+        name: (sum(values) / len(values) if values else 0.0) for name, values in slices.items()
+    }
+    failing = {
+        name: round(overall_rate - rate, 4)
+        for name, rate in per_slice.items()
+        if overall_rate - rate > max_gap
+    }
+    return {
+        "overall_rate": round(overall_rate, 4),
+        "per_slice": {name: round(rate, 4) for name, rate in per_slice.items()},
+        "max_gap": max_gap,
+        "failing_slices": failing,
+        "passed": not failing,
+    }
